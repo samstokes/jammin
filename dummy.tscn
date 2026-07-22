@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://lrn8e4nl1gwm"]
+
+[node name="Label" type="Label" unique_id=373261833]
+offset_left = 151.0
+offset_top = 174.0
+offset_right = 191.0
+offset_bottom = 197.0
+text = "HELLO WRODL"
