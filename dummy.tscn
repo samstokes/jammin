@@ -1,8 +1,12 @@
 [gd_scene format=3 uid="uid://lrn8e4nl1gwm"]
 
+[ext_resource type="PackedScene" uid="uid://bph2b0jihsi6y" path="res://beat_tracker.tscn" id="1_gtj52"]
+
 [node name="Label" type="Label" unique_id=373261833]
 offset_left = 151.0
 offset_top = 174.0
 offset_right = 191.0
 offset_bottom = 197.0
 text = "HELLO WRODL"
+
+[node name="BeatTracker" parent="." unique_id=779208897 instance=ExtResource("1_gtj52")]
