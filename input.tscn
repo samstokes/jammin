@@ -4,3 +4,7 @@
 
 [node name="Input" type="Node" unique_id=779208897]
 script = ExtResource("1_ibw0e")
+
+[node name="BeatTimer" type="Timer" parent="." unique_id=1851829060]
+
+[connection signal="timeout" from="BeatTimer" to="." method="_on_beat_timer_timeout"]
