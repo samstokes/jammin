@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://d1krb5u2bwnqr"]
+
+[ext_resource type="Script" uid="uid://cmctpd5hcaima" path="res://clock_pivot.gd" id="1_071om"]
+[ext_resource type="Texture2D" uid="uid://3njgoipcqe3q" path="res://art/clock_hand.png" id="2_ft5c4"]
+[ext_resource type="Script" uid="uid://iognjpkttptq" path="res://clock_hand_area2d.gd" id="3_bs8np"]
+[ext_resource type="Texture2D" uid="uid://dl7n2sd3qmofe" path="res://art/clock_circle.png" id="4_yq7w2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4l2k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s44q8"]
+size = Vector2(293.33337, 158.33334)
+
+[node name="moira_workspace" type="Node2D" unique_id=159137903]
+
+[node name="ClockPivot" type="Node2D" parent="." unique_id=1159318385]
+position = Vector2(593, 343)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_071om")
+
+[node name="ClockHand" type="Sprite2D" parent="ClockPivot" unique_id=1818500787]
+position = Vector2(-1.5258789e-05, -214.99998)
+scale = Vector2(1.1666666, 1.1666666)
+texture = ExtResource("2_ft5c4")
+metadata/_edit_group_ = true
+
+[node name="Area2D" type="Area2D" parent="ClockPivot/ClockHand" unique_id=1244373389]
+script = ExtResource("3_bs8np")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockPivot/ClockHand/Area2D" unique_id=1250923537]
+position = Vector2(0, -152.85716)
+shape = SubResource("RectangleShape2D_m4l2k")
+
+[node name="ClockCircle" type="Sprite2D" parent="." unique_id=612713662]
+position = Vector2(593, 338)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("4_yq7w2")
+
+[node name="Area2D" type="Area2D" parent="ClockCircle" unique_id=641455681]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockCircle/Area2D" unique_id=139655512]
+position = Vector2(-40, -390.8333)
+shape = SubResource("RectangleShape2D_s44q8")
+
+[connection signal="area_entered" from="ClockPivot/ClockHand/Area2D" to="ClockPivot/ClockHand/Area2D" method="_on_area_entered"]
+[connection signal="area_exited" from="ClockPivot/ClockHand/Area2D" to="ClockPivot/ClockHand/Area2D" method="_on_area_exited"]
