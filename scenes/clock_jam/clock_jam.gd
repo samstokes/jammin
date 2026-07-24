@@ -87,7 +87,7 @@ func _process(delta: float) -> void:
 	clock_play_hand_node.angle += delta_angle
 
 func _on_note_strummed():
-	if current_notes.empty():
+	if current_notes.is_empty():
 		_spawn_four_notes()
 
 func _on_beat():
