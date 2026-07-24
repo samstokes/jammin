@@ -1,12 +1,31 @@
 [gd_scene format=3 uid="uid://lrn8e4nl1gwm"]
 
 [ext_resource type="PackedScene" uid="uid://bph2b0jihsi6y" path="res://beat_tracker.tscn" id="1_gtj52"]
+[ext_resource type="Script" uid="uid://bibtlqjhjrssr" path="res://dummy.gd" id="1_xmspm"]
 
 [node name="Label" type="Label" unique_id=373261833]
-offset_left = 151.0
-offset_top = 174.0
-offset_right = 191.0
-offset_bottom = 197.0
-text = "HELLO WRODL"
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -541.0
+offset_top = -250.5
+offset_right = 541.0
+offset_bottom = 250.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 128
+text = "DOOF"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_xmspm")
 
 [node name="BeatTracker" parent="." unique_id=779208897 instance=ExtResource("1_gtj52")]
+
+[node name="BeatTimer" type="Timer" parent="." unique_id=1327587345]
+
+[connection signal="hit" from="BeatTracker" to="." method="_on_beat_tracker_hit"]
+[connection signal="miss" from="BeatTracker" to="." method="_on_beat_tracker_miss"]
+[connection signal="timeout" from="BeatTimer" to="." method="_on_beat_timer_timeout"]
