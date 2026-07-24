@@ -1,6 +1,7 @@
 extends Area2D
 
 signal hit
+signal miss
 
 var in_area: bool = false
 
@@ -14,9 +15,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:		
 	if Input.is_action_just_pressed("beat_main"):
 		if in_area:
-			print("a hit!")
+			emit_signal("hit")
 		else:
-			print("a miss!")
+			emit_signal("miss")
 		
 
 

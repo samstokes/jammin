@@ -4,13 +4,21 @@
 [ext_resource type="Texture2D" uid="uid://3njgoipcqe3q" path="res://art/clock_hand.png" id="2_ft5c4"]
 [ext_resource type="Script" uid="uid://iognjpkttptq" path="res://clock_hand_area2d.gd" id="3_bs8np"]
 [ext_resource type="Texture2D" uid="uid://dl7n2sd3qmofe" path="res://art/clock_circle.png" id="4_yq7w2"]
+[ext_resource type="Script" uid="uid://57iweg6g1j6p" path="res://hit_miss_label.gd" id="5_ft5c4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m4l2k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s44q8"]
-size = Vector2(293.33337, 158.33334)
+size = Vector2(121.66666, 125)
 
 [node name="moira_workspace" type="Node2D" unique_id=159137903]
+
+[node name="HitMissLabel" type="Label" parent="." unique_id=1239143419]
+offset_left = 676.0
+offset_top = 45.00003
+offset_right = 817.0
+offset_bottom = 110.00003
+script = ExtResource("5_ft5c4")
 
 [node name="ClockPivot" type="Node2D" parent="." unique_id=1159318385]
 position = Vector2(593, 343)
@@ -23,10 +31,12 @@ scale = Vector2(1.1666666, 1.1666666)
 texture = ExtResource("2_ft5c4")
 metadata/_edit_group_ = true
 
-[node name="Area2D" type="Area2D" parent="ClockPivot/ClockHand" unique_id=1244373389]
+[node name="ClockHandArea2D" type="Area2D" parent="ClockPivot/ClockHand" unique_id=1244373389]
+position = Vector2(-50.816284, 103.46933)
+scale = Vector2(1.4285712, 1.4285712)
 script = ExtResource("3_bs8np")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockPivot/ClockHand/Area2D" unique_id=1250923537]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockPivot/ClockHand/ClockHandArea2D" unique_id=1250923537]
 position = Vector2(0, -152.85716)
 shape = SubResource("RectangleShape2D_m4l2k")
 
@@ -38,8 +48,8 @@ texture = ExtResource("4_yq7w2")
 [node name="Area2D" type="Area2D" parent="ClockCircle" unique_id=641455681]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockCircle/Area2D" unique_id=139655512]
-position = Vector2(-40, -390.8333)
+position = Vector2(-5.833313, -389.16666)
 shape = SubResource("RectangleShape2D_s44q8")
 
-[connection signal="area_entered" from="ClockPivot/ClockHand/Area2D" to="ClockPivot/ClockHand/Area2D" method="_on_area_entered"]
-[connection signal="area_exited" from="ClockPivot/ClockHand/Area2D" to="ClockPivot/ClockHand/Area2D" method="_on_area_exited"]
+[connection signal="area_entered" from="ClockPivot/ClockHand/ClockHandArea2D" to="ClockPivot/ClockHand/ClockHandArea2D" method="_on_area_entered"]
+[connection signal="area_exited" from="ClockPivot/ClockHand/ClockHandArea2D" to="ClockPivot/ClockHand/ClockHandArea2D" method="_on_area_exited"]

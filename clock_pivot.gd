@@ -17,6 +17,6 @@ func _process(delta: float) -> void:
 	# bps = (bpm)/60  = 1
 	# we want to go around the circle every 1 second...
 	# rotation = 2pi * bps = 2pi * bpm/60
-	rotation += (2 * PI * bpm/ 60) * delta
+	rotation += (2 * PI * bpm/ 60 /4) * delta
 	# angular_speed * delta
 	# 2 * PI * bpm * delta / 60
