@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://tmunj8komwek"]
+
+[ext_resource type="Script" uid="uid://c1v4w0gqatj0l" path="res://entities/clock_guitar/clock_guitar.gd" id="1_lsy58"]
+
+[node name="Node2D" type="Node2D" unique_id=1683121846]
+script = ExtResource("1_lsy58")
+radius = 200.0
+color = Color(0, 0, 0, 1)
