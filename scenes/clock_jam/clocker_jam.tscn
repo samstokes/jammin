@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://dx6j70wkm2cp7"]
-
-[ext_resource type="PackedScene" uid="uid://tmunj8komwek" path="res://entities/clock_guitar/clock_guitar.tscn" id="1_iwo8y"]
-
-[node name="Clocker" type="Node2D" unique_id=1576559141]
-
-[node name="ClockGuitar" parent="." unique_id=1683121846 instance=ExtResource("1_iwo8y")]
