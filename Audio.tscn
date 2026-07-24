@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://blkuu1r0nywfh"]
+
+[ext_resource type="AudioStream" uid="uid://cyjei6geq4i5j" path="res://audio/03 - Stay Fresh.mp3" id="1_ml5b6"]
+
+[node name="Node" type="Node" unique_id=181226458]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1102771344]
+stream = ExtResource("1_ml5b6")
