@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Jammin"
-run/main_scene="uid://lrn8e4nl1gwm"
+run/main_scene="uid://dx6j70wkm2cp7"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Globals="*uid://228y6w6aemma"
+AudioManager="*uid://ts2fte1nr5tx"
 
 [display]
 

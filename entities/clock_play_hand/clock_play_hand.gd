@@ -19,7 +19,8 @@ extends Node2D
 		queue_redraw()
 
 func _draw():
-	var directional_vector = Vector2(cos(angle), sin(angle))
+	var offset_angle = angle - (PI / 2)
+	var directional_vector = Vector2(cos(offset_angle), sin(offset_angle))
 
 	var end_point = directional_vector * length
 	draw_line(Vector2.ZERO, end_point, color, thickness)
