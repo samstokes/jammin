@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c0ngh35oowrpw" path="res://scenes/clock_jam/clock_jam.gd" id="1_icskc"]
 [ext_resource type="PackedScene" uid="uid://tmunj8komwek" path="res://entities/clock_guitar/clock_guitar.tscn" id="2_gs6we"]
-[ext_resource type="PackedScene" uid="uid://bbfmu7tqx8qel" path="res://entities/clock_note/clock_note.tscn" id="3_7cr65"]
 [ext_resource type="PackedScene" uid="uid://cp1cc7vtyvwmc" path="res://entities/clock_play_hand/clock_play_hand.tscn" id="3_gs6we"]
 
 [node name="ClockJammer" type="Control" unique_id=960518545]
@@ -21,10 +20,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -3.0
-offset_top = 3.0
-offset_right = 96.0
-offset_bottom = 26.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
@@ -38,12 +33,13 @@ size_flags_stretch_ratio = 3.0
 [node name="Label" type="Label" parent="HBoxContainer/StartContainer" unique_id=1231400250]
 layout_mode = 2
 text = "Artist - Title"
+horizontal_alignment = 1
 
 [node name="CenterContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=983289811]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-size_flags_stretch_ratio = 5.0
+size_flags_stretch_ratio = 4.0
 
 [node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/CenterContainer" unique_id=1617088163]
 layout_mode = 2
@@ -62,9 +58,6 @@ thickness = 3.0
 
 [node name="NotesContainer" type="Node2D" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=259836155]
 
-[node name="ClockNote" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock/NotesContainer" unique_id=2060011008 instance=ExtResource("3_7cr65")]
-visible = false
-
 [node name="EndContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=761765869]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -73,3 +66,4 @@ size_flags_stretch_ratio = 3.0
 [node name="Label" type="Label" parent="HBoxContainer/EndContainer" unique_id=1117677339]
 layout_mode = 2
 text = "Beats Survived: 0"
+horizontal_alignment = 1
