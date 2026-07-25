@@ -34,10 +34,10 @@ func _track_beat_and_measure() -> void:
 		if measure_num > beats_per_measure:
 			measure_num = 1
 		if measure_num == beats_per_measure:
-			emit_signal("beat", song_pos_in_beats)
 			emit_signal("measure", song_pos_in_beats)
 		last_reported_beat = song_pos_in_beats
 		measure_num += 1
+		emit_signal("beat", song_pos_in_beats)
 
 func get_measure_in_seconds() -> float:
 	return sec_per_beat*beats_per_measure

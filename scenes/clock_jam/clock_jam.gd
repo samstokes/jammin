@@ -1,7 +1,7 @@
 extends Node
 
 @export var beats_per_clock_cycle = 4.0
-@export var strum_success_tolerance = 0.1
+@export var strum_success_tolerance = 0.05
 @export var doom_seconds = 60.0
 
 var doom_rads_per_second = TAU / doom_seconds
@@ -40,20 +40,34 @@ func _ready() -> void:
 	AudioManager.get_node("AudioProcessing").connect("measure", _on_new_measure)
 	AudioManager.load_song()
 	
-
-func _on_new_measure(args):	
+func _on_new_song(title, artist, beats_per_measure) -> void:
+	beats_per_clock_cycle = beats_per_measure
+	_title = title
+	_artist = artist
 	for note in current_notes:
 		if is_instance_valid(note):
 			note.node.queue_free()
 	current_notes.clear()
 	_spawn_notes()
+	
+func _on_new_measure(args):	
+	# Bounce the clock guitar node to indicate a measure with a tween. Scale it up to 1.2x 
+	# and then back down to 1.0x over 0.2 seconds total.
+	var tween = create_tween()
+	tween.tween_property(clock_guitar_node, "scale", Vector2(1.1, 1.1), 0.1)\
+		.set_trans(Tween.TRANS_QUAD)\
+		.set_ease(Tween.EASE_OUT)
+	tween.tween_property(clock_guitar_node, "scale", Vector2(1.0, 1.0), 0.2)\
+		.set_trans(Tween.TRANS_QUAD)\
+		.set_ease(Tween.EASE_IN_OUT)
 
-
-func _on_new_song(title, artist, beats_per_measure) -> void:
-	beats_per_clock_cycle = beats_per_measure
-	_title = title
-	_artist = artist
-	_on_new_measure(0)
+func _on_beat(song_pos_in_beats):
+	var replace_pos: int = posmod(song_pos_in_beats-1, beats_per_clock_cycle)
+	var replace_target_note: SpawnedClockNoteData = _match_to_nearest_beat(replace_pos)
+	if is_instance_valid(replace_target_note):
+		replace_target_note.node.queue_free()
+		current_notes.erase(replace_target_note)
+	_spawn_clock_note(replace_pos)
 	
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -61,6 +75,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		var key_string = OS.get_keycode_string(event.keycode).to_lower()
 		if key_string in playable_characters:
 			_strum_clock_guitar(key_string)
+			
+
+func _match_to_nearest_beat(nearest_beat):
+	var note_at_beat_in_measure = null
+	for note_data in current_notes:
+		if note_data.beat_in_measure == nearest_beat:
+			note_at_beat_in_measure = note_data
+			break
+	return note_at_beat_in_measure
 
 func _strum_clock_guitar(key_string: String) -> void:
 	AudioManager.play_sfx(strum_success_sfx)
@@ -74,11 +97,7 @@ func _strum_clock_guitar(key_string: String) -> void:
 		AudioManager.play_sfx(strum_failure_sfx)
 		return
 	
-	var note_at_beat_in_measure = null
-	for note_data in current_notes:
-		if note_data.beat_in_measure == time_diff_and_nearest_beat[nearest_beat_index]:
-			note_at_beat_in_measure = note_data
-			break
+	var note_at_beat_in_measure = _match_to_nearest_beat(time_diff_and_nearest_beat[nearest_beat_index])
 	if note_at_beat_in_measure == null:
 		AudioManager.play_sfx(strum_failure_sfx)
 		return
@@ -100,24 +119,6 @@ func _process(delta: float) -> void:
 	var delta_angle_doom = delta * doom_rads_per_second
 	clock_doom_hand_node.angle += delta_angle_doom
 
-
-func _on_beat(args):
-	# Bounce the clock guitar node to indicate a beat with a tween. Scale it up to 1.2x 
-	# and then back down to 1.0x over 0.2 seconds total.
-	var tween = create_tween()
-	tween.tween_property(clock_guitar_node, "scale", Vector2(1.1, 1.1), 0.1)\
-		.set_trans(Tween.TRANS_QUAD)\
-		.set_ease(Tween.EASE_OUT)
-	tween.tween_property(clock_guitar_node, "scale", Vector2(1.0, 1.0), 0.2)\
-		.set_trans(Tween.TRANS_QUAD)\
-		.set_ease(Tween.EASE_IN_OUT)
-
-func _spawn_four_notes():
-	_spawn_clock_note(0)
-	_spawn_clock_note(1)
-	_spawn_clock_note(2)
-	_spawn_clock_note(3)
-	
 func _spawn_notes():
 	for i in range(beats_per_clock_cycle):
 		_spawn_clock_note(i)
