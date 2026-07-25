@@ -9,11 +9,9 @@ signal doom
 @onready var doom_rads_per_second = TAU / doom_seconds
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var delta_angle_doom = delta * doom_rads_per_second
 	angle += delta_angle_doom
@@ -22,7 +20,3 @@ func _process(delta: float) -> void:
 		angle = TAU
 		doom.emit()
 		set_process(false)
-		
-func reset() -> void:
-	angle = 0.0
-	set_process(true)
