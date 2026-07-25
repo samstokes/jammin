@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://b53cyinn28722"]
+
+[ext_resource type="Script" uid="uid://618gk3lf8hwg" path="res://scenes/game_won/game_won.gd" id="1_fohbu"]
+
+[node name="GameWon" type="CenterContainer" unique_id=1188628968]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fohbu")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=525086135]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="PanelContainer" unique_id=1426705755]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/Panel" unique_id=5289328]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Panel/MarginContainer" unique_id=1112914351]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/Panel/MarginContainer/VBoxContainer" unique_id=1164222954]
+layout_mode = 2
+text = "Song completed!"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="PanelContainer/Panel/MarginContainer/VBoxContainer" unique_id=1751846809]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ContinueButton" type="Button" parent="PanelContainer/Panel/MarginContainer/VBoxContainer" unique_id=868166155]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Continue"

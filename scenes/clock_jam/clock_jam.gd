@@ -27,6 +27,7 @@ signal hit_beat
 @onready var clock_play_hand_node: Node2D = %Clock/ClockPlayHand
 @onready var clock_doom_hand_node: Node2D = %Clock/ClockDoomHand
 @onready var game_over_dialog_node: Node = %GameOverDialog
+@onready var game_won_dialog_node: Node = %GameWonDialog
 
 
 var clock_measure_beat_sfx = preload("res://sfx/glass_005.ogg")
@@ -156,4 +157,12 @@ func _on_doom() -> void:
 	# TODO replace me with game over logic
 	AudioManager.get_node("AudioProcessing").stop()
 	AudioManager.play_sfx(game_over_sfx)
+	set_process(false)
+
+# TODO: Someone needs to implement a game won condition and call this when the song ends :p
+func _on_game_won() -> void:
+	# Reveal the game won dialog and stop the audio processing.
+	game_won_dialog_node.show()
+
+	AudioManager.get_node("AudioProcessing").stop()
 	set_process(false)
