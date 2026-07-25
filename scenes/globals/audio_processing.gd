@@ -18,6 +18,7 @@ signal beat(position)
 # Called when the node enters the scene tree for the first time.
 # V1: play music immediately and set up the bmp dynamically from exported data
 func _ready() -> void:
+	print("AudioProcessing: my dad is ", get_parent().name)
 	sec_per_beat = 60.0/bmp
 	play()
 
@@ -30,6 +31,7 @@ func _physics_process(delta: float) -> void:
 		_track_beat_and_measure()
 
 func _track_beat_and_measure():
+	print("AudioProcessing._track_beat_and_measure: my dad is ", get_parent().name)
 	if last_reported_beat < song_pos_in_beats:
 		if measure_num > beats_per_measure:
 			measure_num = 1
@@ -57,5 +59,4 @@ func delta_time_and_nearest_beat():
 	var nearest_beat_time = nearest_beat() * sec_per_beat
 	var abs_delta_to_nearest_beat = abs(song_pos - nearest_beat_time)
 	var nearest_beat_in_measure = int(round(nearest_beat_time /sec_per_beat)) % int(beats_per_measure)
-	print(abs_delta_to_nearest_beat, " ", )
 	return Vector2(abs_delta_to_nearest_beat, nearest_beat_in_measure)

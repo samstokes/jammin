@@ -7,7 +7,7 @@
 [node name="AudioManager" type="Node2D" unique_id=305368265]
 script = ExtResource("1_kic43")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=126237020]
+[node name="AudioProcessing" type="AudioStreamPlayer" parent="." unique_id=126237020]
 stream = ExtResource("2_prhr6")
 script = ExtResource("3_hj6p4")
 bmp = 128

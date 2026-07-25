@@ -29,14 +29,16 @@ var playable_characters = ["f", "left"]
 var current_notes: Array[SpawnedClockNoteData] = []
 
 func _ready() -> void:
-	AudioProcessing.play(0)
+	AudioManager.get_node("AudioProcessing").play(0)
 	_spawn_four_notes()
-	AudioProcessing.connect("beat", _on_beat)
-	AudioProcessing.connect("measure", _on_new_measure)
+	AudioManager.get_node("AudioProcessing").connect("beat", _on_beat)
+	AudioManager.get_node("AudioProcessing").connect("measure", _on_new_measure)
 	
 
 # WARNING, DO NOT ERASE IN ASCENDING ORDER
 func _on_new_measure(args):
+	print("_on_new_measure: ", args)
+	
 	for i in range(current_notes.size() -1, -1, -1):
 		var note = current_notes[i]
 		note.node.queue_free()
@@ -54,7 +56,7 @@ func _strum_clock_guitar(key_string: String) -> void:
 	AudioManager.play_sfx(strum_success_sfx)
 
 	# Determine if the strum was on a beat by rounding the current song to the nearest beat with a tolerance of 0.1 seconds.
-	var time_diff_and_nearest_beat = AudioProcessing.delta_time_and_nearest_beat()
+	var time_diff_and_nearest_beat = AudioManager.get_node("AudioProcessing").delta_time_and_nearest_beat()
 	var was_on_beat = time_diff_and_nearest_beat[time_diff_index] <= strum_success_tolerance
 	print("Strummed (key: %s, on_beat: %s, beat_in_measure: %s)" % [key_string, was_on_beat, time_diff_and_nearest_beat[nearest_beat_index]])
 
@@ -83,11 +85,12 @@ func _strum_clock_guitar(key_string: String) -> void:
 
 
 func _process(delta: float) -> void:
-	var delta_angle = delta * AudioProcessing.get_rads_per_second()
+	var delta_angle = delta * AudioManager.get_node("AudioProcessing").get_rads_per_second()
 	clock_play_hand_node.angle += delta_angle
 
 
 func _on_beat(args):
+	print("_on_beat: ", args)
 
 	# Bounce the clock guitar node to indicate a beat with a tween. Scale it up to 1.2x 
 	# and then back down to 1.0x over 0.2 seconds total.
