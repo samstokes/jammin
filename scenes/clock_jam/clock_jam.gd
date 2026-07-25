@@ -1,6 +1,5 @@
 extends Node
 
-@export var beats_per_minute = 128.0
 @export var beats_per_clock_cycle = 4.0
 @export var strum_success_tolerance = 0.1
 @export var doom_seconds = 60.0
@@ -13,6 +12,9 @@ var beat_count: int = 0
 # For accessing Vector2 return from  AudioProcessing.delta_time_and_nearest_beat()
 var time_diff_index = 0
 var nearest_beat_index = 1
+
+var _artist: String = ""
+var _title: String = ""
 
 @onready var clock_guitar_node: Node2D = %Clock/ClockGuitar
 @onready var clock_note_container_node: Node2D = %Clock/NotesContainer
@@ -33,22 +35,26 @@ var playable_characters = ["f", "left"]
 var current_notes: Array[SpawnedClockNoteData] = []
 
 func _ready() -> void:
-	AudioManager.get_node("AudioProcessing").play(0)
-	_spawn_four_notes()
+	AudioManager.get_node("AudioProcessing").connect("song", _on_new_song)
 	AudioManager.get_node("AudioProcessing").connect("beat", _on_beat)
 	AudioManager.get_node("AudioProcessing").connect("measure", _on_new_measure)
+	AudioManager.load_song()
 	
 
-# WARNING, DO NOT ERASE IN ASCENDING ORDER
-func _on_new_measure(args):
-	print("_on_new_measure: ", args)
-	
+func _on_new_measure(args):	
 	for note in current_notes:
 		if is_instance_valid(note):
 			note.node.queue_free()
 	current_notes.clear()
-	_spawn_four_notes()
-		
+	_spawn_notes()
+
+
+func _on_new_song(title, artist, beats_per_measure) -> void:
+	beats_per_clock_cycle = beats_per_measure
+	_title = title
+	_artist = artist
+	_on_new_measure(0)
+	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
@@ -96,8 +102,6 @@ func _process(delta: float) -> void:
 
 
 func _on_beat(args):
-	print("_on_beat: ", args)
-
 	# Bounce the clock guitar node to indicate a beat with a tween. Scale it up to 1.2x 
 	# and then back down to 1.0x over 0.2 seconds total.
 	var tween = create_tween()
@@ -113,6 +117,11 @@ func _spawn_four_notes():
 	_spawn_clock_note(1)
 	_spawn_clock_note(2)
 	_spawn_clock_note(3)
+	
+func _spawn_notes():
+	for i in range(beats_per_clock_cycle):
+		_spawn_clock_note(i)
+		
 
 func _spawn_clock_note(beat: int = 0):
 	var clock_note_instance = clock_note_scene.instantiate()

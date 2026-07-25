@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bm51mnsokhgvw"
+path="res://.godot/imported/01 mx lxfx !.mp3-05b85fb0150f72702bb23a2f1595bdac.mp3str"
+
+[deps]
+
+source_file="res://audio/01 mx lxfx !.mp3"
+dest_files=["res://.godot/imported/01 mx lxfx !.mp3-05b85fb0150f72702bb23a2f1595bdac.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

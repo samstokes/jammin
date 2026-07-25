@@ -10,4 +10,5 @@ script = ExtResource("1_kic43")
 [node name="AudioProcessing" type="AudioStreamPlayer" parent="." unique_id=126237020]
 stream = ExtResource("2_prhr6")
 script = ExtResource("3_hj6p4")
-bmp = 128
+
+[connection signal="finished" from="AudioProcessing" to="." method="_on_audio_processing_finished"]
