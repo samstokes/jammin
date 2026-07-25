@@ -80,7 +80,7 @@ func _on_beat(song_pos_in_beats):
 		current_notes.erase(replace_target_note)
 	_spawn_clock_note(replace_pos)
 	await get_tree().create_timer(strum_success_tolerance).timeout
-	#get_tree().root.get_node("BeatTracker").beat_window_end()
+	get_node("GameContainer/EndContainer/ScoreTracker/BeatTracker").beat_window_end()
 	
 
 func _unhandled_input(event: InputEvent) -> void:
