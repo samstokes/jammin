@@ -39,10 +39,10 @@ func _ready() -> void:
 func _on_new_measure(args):
 	print("_on_new_measure: ", args)
 	
-	for i in range(current_notes.size() -1, -1, -1):
-		var note = current_notes[i]
-		note.node.queue_free()
-		note.erase()
+	for note in current_notes:
+		if is_instance_valid(note):
+			note.node.queue_free()
+	current_notes.clear()
 	_spawn_four_notes()
 		
 
