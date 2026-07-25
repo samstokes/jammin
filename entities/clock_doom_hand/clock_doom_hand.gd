@@ -20,3 +20,11 @@ func _process(delta: float) -> void:
 		angle = TAU
 		doom.emit()
 		set_process(false)
+
+func buy_time(seconds: float) -> void:
+	var extra_angle = seconds * doom_rads_per_second
+	
+	var new_angle = angle - extra_angle
+	new_angle = maxf(new_angle, 0.0)
+	
+	angle = new_angle

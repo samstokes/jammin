@@ -1,5 +1,7 @@
 extends Label
 
+signal streak_extended(streak: int)
+
 var beats_elapsed: int = 0
 var current_streak: int = 0 
 # ^ maybe this needs to live somewhere else oh well for now
@@ -20,6 +22,7 @@ func _on_beat(song_pos_in_beats) -> void:
 	
 func _on_beat_hit() -> void:
 	current_streak += 1
+	streak_extended.emit(current_streak)
 	text = format_string % [beats_elapsed, current_streak]
 	
 func _on_beat_miss() -> void:

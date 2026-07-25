@@ -2,6 +2,7 @@ extends Node
 
 @export var beats_per_clock_cycle = 4.0
 @export var strum_success_tolerance = 0.05
+@export var seconds_bought_base = 0.5
 
 var current_song_time: float = 0.0
 var beat_count: int = 0
@@ -160,3 +161,9 @@ func _on_game_won() -> void:
 
 	AudioManager.get_node("AudioProcessing").stop()
 	set_process(false)
+
+func _on_score_tracker_streak_extended(streak: int) -> void:
+	# Reward longer streaks. Fiddle with this calculation to implement diminishing returns
+	var streak_seconds_bought = seconds_bought_base * (1.5 ** streak - 0.5)
+	
+	clock_doom_hand_node.buy_time(streak_seconds_bought)
