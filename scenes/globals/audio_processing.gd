@@ -16,11 +16,8 @@ signal beat(position)
 signal song(title, artist, beats_per_measure)
 signal song_completed()
 
-# Called when the node enters the scene tree for the first time.
-# V1: play music immediately and set up the bpm dynamically from exported data
 func _ready() -> void:
 	sec_per_beat = 60.0/bpm
-	play()
 
 # Update and track information every frame
 func _physics_process(delta: float) -> void:

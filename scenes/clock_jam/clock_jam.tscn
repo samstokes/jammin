@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://2ccsdq47rcvi" path="res://scenes/clock_jam/score_tracker.gd" id="5_7cr65"]
 [ext_resource type="PackedScene" uid="uid://cwtgm8yuw65kb" path="res://entities/clock_doom_hand/clock_doom_hand.tscn" id="6_8ds76"]
 [ext_resource type="PackedScene" uid="uid://b53cyinn28722" path="res://scenes/game_won/game_won.tscn" id="8_h5fk5"]
+[ext_resource type="PackedScene" uid="uid://cu47psxjetvdr" path="res://track_player/track_player.tscn" id="9_bo1sh"]
 
 [node name="ClockJammer" type="Control" unique_id=960518545]
 layout_mode = 3
@@ -87,5 +88,11 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="TrackPlayer" parent="." unique_id=2036277386 instance=ExtResource("9_bo1sh")]
 
 [connection signal="doom" from="GameContainer/CenterContainer/CenterContainer/Control/Clock/ClockDoomHand" to="." method="_on_doom"]
