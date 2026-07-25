@@ -84,6 +84,7 @@ layout_mode = 1
 
 [node name="GameWonDialog" parent="." unique_id=1188628968 instance=ExtResource("8_h5fk5")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 anchors_preset = 0
 

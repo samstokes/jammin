@@ -49,6 +49,7 @@ func _ready() -> void:
 	AudioManager.get_node("AudioProcessing").connect("song", _on_new_song)
 	AudioManager.get_node("AudioProcessing").connect("beat", _on_beat)
 	AudioManager.get_node("AudioProcessing").connect("measure", _on_new_measure)
+	AudioManager.get_node("AudioProcessing").connect("song_completed", _on_game_won)
 	AudioManager.load_song()
 	
 func _on_new_song(title, artist, beats_per_measure) -> void:
@@ -159,7 +160,6 @@ func _on_doom() -> void:
 	AudioManager.play_sfx(game_over_sfx)
 	set_process(false)
 
-# TODO: Someone needs to implement a game won condition and call this when the song ends :p
 func _on_game_won() -> void:
 	# Reveal the game won dialog and stop the audio processing.
 	game_won_dialog_node.show()
