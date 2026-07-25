@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bxdr2be4wvgoj" path="res://scenes/clock_jam/populate_song_info.gd" id="2_7cr65"]
 [ext_resource type="PackedScene" uid="uid://tmunj8komwek" path="res://entities/clock_guitar/clock_guitar.tscn" id="2_gs6we"]
 [ext_resource type="PackedScene" uid="uid://cp1cc7vtyvwmc" path="res://entities/clock_play_hand/clock_play_hand.tscn" id="3_gs6we"]
+[ext_resource type="Script" uid="uid://2ccsdq47rcvi" path="res://scenes/clock_jam/score_tracker.gd" id="5_7cr65"]
 
 [node name="ClockJammer" type="Control" unique_id=960518545]
 layout_mode = 3
@@ -74,3 +75,4 @@ size_flags_stretch_ratio = 3.0
 layout_mode = 2
 text = "Beats Survived: 0"
 horizontal_alignment = 1
+script = ExtResource("5_7cr65")
