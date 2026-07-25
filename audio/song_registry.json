@@ -14,5 +14,21 @@
 		"bpm":124,
 		"beats_per_measure":3,
 		"UID":"uid://bm51mnsokhgvw"
+	},
+	{   
+		"id":3,
+		"title":"Funk Rock \"Midday Fiesta\"",
+		"artist":"Vlad Annenkov",
+		"bpm":117,
+		"beats_per_measure":4,
+		"UID":"uid://wavfi8do8b5j"
+	},
+	{   
+		"id":4,
+		"title":"Watch The",
+		"artist":"Edmar Travassos",
+		"bpm":120,
+		"beats_per_measure":4,
+		"UID":"uid://cknc8sr651eoi"
 	}
 ]
