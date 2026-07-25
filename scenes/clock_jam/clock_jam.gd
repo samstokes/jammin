@@ -34,6 +34,8 @@ var clock_measure_start_sfx = preload("res://sfx/glass_006.ogg")
 var strum_success_sfx = preload("res://sfx/tick_001.ogg")
 var strum_failure_sfx = preload("res://sfx/click_001.ogg")
 
+var game_over_sfx = preload("res://sfx/explosionCrunch_004.ogg")
+
 var clock_note_scene = preload("res://entities/clock_note/clock_note.tscn")
 var playable_characters = ["f", "left"]
 
@@ -144,3 +146,10 @@ class SpawnedClockNoteData:
 	var character: String
 	var beat_in_measure: int
 	var node: Node2D
+
+
+func _on_doom() -> void:
+	# TODO replace me with game over logic
+	AudioManager.get_node("AudioProcessing").stop()
+	AudioManager.play_sfx(game_over_sfx)
+	set_process(false)

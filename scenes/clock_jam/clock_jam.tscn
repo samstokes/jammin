@@ -74,3 +74,5 @@ layout_mode = 2
 text = "Beats Survived: 0"
 horizontal_alignment = 1
 script = ExtResource("5_7cr65")
+
+[connection signal="doom" from="HBoxContainer/CenterContainer/CenterContainer/Control/Clock/ClockDoomHand" to="." method="_on_doom"]
