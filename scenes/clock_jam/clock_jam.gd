@@ -2,9 +2,6 @@ extends Node
 
 @export var beats_per_clock_cycle = 4.0
 @export var strum_success_tolerance = 0.05
-@export var doom_seconds = 10.0
-
-var doom_rads_per_second = TAU / doom_seconds
 
 var current_song_time: float = 0.0
 var beat_count: int = 0
@@ -118,9 +115,6 @@ func _strum_clock_guitar(key_string: String) -> void:
 func _process(delta: float) -> void:
 	var delta_angle_play = delta * AudioManager.get_node("AudioProcessing").get_rads_per_second()
 	clock_play_hand_node.angle += delta_angle_play
-	
-	var delta_angle_doom = delta * doom_rads_per_second
-	clock_doom_hand_node.angle += delta_angle_doom
 
 func _spawn_notes():
 	for i in range(beats_per_clock_cycle):
