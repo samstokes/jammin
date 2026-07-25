@@ -14,6 +14,7 @@ var measure_num: int = 1
 signal measure(position)
 signal beat(position)
 signal song(title, artist, beats_per_measure)
+signal song_completed()
 
 # Called when the node enters the scene tree for the first time.
 # V1: play music immediately and set up the bpm dynamically from exported data
@@ -38,6 +39,10 @@ func _track_beat_and_measure() -> void:
 		last_reported_beat = song_pos_in_beats
 		measure_num += 1
 		emit_signal("beat", song_pos_in_beats)
+	
+	# If the song has completed, emit the completed signal
+	if song_pos >= get_stream().get_length():
+		song_completed.emit()
 
 func get_measure_in_seconds() -> float:
 	return sec_per_beat*beats_per_measure
