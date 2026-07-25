@@ -80,6 +80,7 @@ horizontal_alignment = 1
 script = ExtResource("5_7cr65")
 
 [node name="BeatTracker" type="Node" parent="GameContainer/EndContainer/ScoreTracker" unique_id=275831661]
+unique_name_in_owner = true
 script = ExtResource("9_bo1sh")
 
 [node name="GameOverDialog" parent="." unique_id=1903633973 instance=ExtResource("2_pto6c")]

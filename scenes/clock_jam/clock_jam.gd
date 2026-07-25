@@ -13,12 +13,13 @@ var nearest_beat_index = 1
 
 var _artist: String = ""
 var _title: String = ""
-
 signal missed_beat 
 # ^ two different kinds of missed beats, btw: 
 # 1. hit a key but not on beat or
 # 2. missed a beat entirely (no button press)
 signal hit_beat
+
+@onready var beat_tracker_node: Node = %BeatTracker
 
 @onready var clock_guitar_node: Node2D = %Clock/ClockGuitar
 @onready var clock_note_container_node: Node2D = %Clock/NotesContainer
@@ -80,7 +81,7 @@ func _on_beat(song_pos_in_beats):
 		current_notes.erase(replace_target_note)
 	_spawn_clock_note(replace_pos)
 	await get_tree().create_timer(strum_success_tolerance).timeout
-	get_node("GameContainer/EndContainer/ScoreTracker/BeatTracker").beat_window_end()
+	beat_tracker_node.beat_window_end()
 	
 
 func _unhandled_input(event: InputEvent) -> void:
