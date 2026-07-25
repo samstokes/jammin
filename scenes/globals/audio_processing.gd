@@ -35,7 +35,7 @@ func _track_beat_and_measure():
 	if last_reported_beat < song_pos_in_beats:
 		if measure_num > beats_per_measure:
 			measure_num = 1
-		if measure_num == 1:
+		if measure_num == beats_per_measure:
 			emit_signal("measure", measure_num)
 			emit_signal("beat", song_pos_in_beats)
 		last_reported_beat = song_pos_in_beats
