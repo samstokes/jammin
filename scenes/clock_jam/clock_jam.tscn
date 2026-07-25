@@ -52,9 +52,14 @@ layout_mode = 2
 [node name="Clock" type="Node2D" parent="HBoxContainer/CenterContainer/CenterContainer/Control" unique_id=1979636652]
 unique_name_in_owner = true
 
+[node name="ClockDoomHand" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1770868133 instance=ExtResource("3_gs6we")]
+length = 256.0
+color = Color(1, 0, 0, 1)
+thickness = 7.0
+
 [node name="ClockGuitar" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1683121846 instance=ExtResource("2_gs6we")]
 
-[node name="ClockPlayHand" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1770868133 instance=ExtResource("3_gs6we")]
+[node name="ClockPlayHand" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=514214267 instance=ExtResource("3_gs6we")]
 length = 192.0
 thickness = 3.0
 
