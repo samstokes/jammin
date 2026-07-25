@@ -11,15 +11,12 @@ var beat_count: int = 0
 var time_diff_index = 0
 var nearest_beat_index = 1
 
-var _artist: String = ""
-var _title: String = ""
 signal missed_beat 
 # ^ two different kinds of missed beats, btw: 
 # 1. hit a key but not on beat or
 # 2. missed a beat entirely (no button press)
 signal hit_beat
 
-@onready var beat_tracker_node: Node = %BeatTracker
 @onready var track_player: TrackPlayer = $TrackPlayer 
 @onready var clock_guitar_node: Node2D = %Clock/ClockGuitar
 @onready var clock_note_container_node: Node2D = %Clock/NotesContainer
@@ -27,6 +24,7 @@ signal hit_beat
 @onready var clock_doom_hand_node: Node2D = %Clock/ClockDoomHand
 @onready var game_over_dialog_node: Node = %GameOverDialog
 @onready var game_won_dialog_node: Node = %GameWonDialog
+@onready var song_label_node: Label = %SongLabel
 
 var clock_measure_beat_sfx = preload("res://sfx/glass_005.ogg")
 var clock_measure_start_sfx = preload("res://sfx/glass_006.ogg")
@@ -50,6 +48,8 @@ func _ready() -> void:
 	var track = StayFreshPlayableTrack.new().track()
 	print("Playing track: %s" % [track.debug_string()])
 	track_player.play_track(track)
+
+	song_label_node.text = track.track_details.title + "\n" + track.track_details.artist
 
 func _bounce_clock(strength: float = 1.1) -> void: 
 	var tween = create_tween()
