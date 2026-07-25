@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://2ccsdq47rcvi" path="res://scenes/clock_jam/score_tracker.gd" id="5_7cr65"]
 [ext_resource type="PackedScene" uid="uid://cwtgm8yuw65kb" path="res://entities/clock_doom_hand/clock_doom_hand.tscn" id="6_8ds76"]
 [ext_resource type="PackedScene" uid="uid://b53cyinn28722" path="res://scenes/game_won/game_won.tscn" id="8_h5fk5"]
+[ext_resource type="Script" uid="uid://i6q2tx5gv8eu" path="res://scenes/clock_jam/beat_tracker.gd" id="9_bo1sh"]
 
 [node name="ClockJammer" type="Control" unique_id=960518545]
 layout_mode = 3
@@ -78,6 +79,9 @@ text = "Beats Survived: 0"
 horizontal_alignment = 1
 script = ExtResource("5_7cr65")
 
+[node name="BeatTracker" type="Node" parent="GameContainer/EndContainer/ScoreTracker" unique_id=275831661]
+script = ExtResource("9_bo1sh")
+
 [node name="GameOverDialog" parent="." unique_id=1903633973 instance=ExtResource("2_pto6c")]
 unique_name_in_owner = true
 visible = false
@@ -88,6 +92,10 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="doom" from="GameContainer/CenterContainer/CenterContainer/Control/Clock/ClockDoomHand" to="." method="_on_doom"]
 [connection signal="streak_extended" from="GameContainer/EndContainer/ScoreTracker" to="." method="_on_score_tracker_streak_extended"]

@@ -49,6 +49,7 @@ func _ready() -> void:
 	AudioManager.get_node("AudioProcessing").connect("measure", _on_new_measure)
 	AudioManager.get_node("AudioProcessing").connect("song_completed", _on_game_won)
 	AudioManager.load_song()
+	await get_tree().create_timer(strum_success_tolerance).timeout
 	
 func _on_new_song(title, artist, beats_per_measure) -> void:
 	beats_per_clock_cycle = beats_per_measure
@@ -78,6 +79,8 @@ func _on_beat(song_pos_in_beats):
 		replace_target_note.node.queue_free()
 		current_notes.erase(replace_target_note)
 	_spawn_clock_note(replace_pos)
+	await get_tree().create_timer(strum_success_tolerance).timeout
+	#get_tree().root.get_node("BeatTracker").beat_window_end()
 	
 
 func _unhandled_input(event: InputEvent) -> void:

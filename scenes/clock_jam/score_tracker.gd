@@ -15,6 +15,8 @@ func _ready() -> void:
 	var clock_jammer = get_tree().root.get_node("ClockJammer")
 	clock_jammer.connect("hit_beat", _on_beat_hit)
 	clock_jammer.connect("missed_beat", _on_beat_miss)
+	get_node("BeatTracker").connect("skipped_beat", _on_beat_miss)
+	
 	
 func _on_beat(song_pos_in_beats) -> void:
 	beats_elapsed += 1
