@@ -16,6 +16,12 @@ var nearest_beat_index = 1
 var _artist: String = ""
 var _title: String = ""
 
+signal missed_beat 
+# ^ two different kinds of missed beats, btw: 
+# 1. hit a key but not on beat or
+# 2. missed a beat entirely (no button press)
+signal hit_beat
+
 @onready var clock_guitar_node: Node2D = %Clock/ClockGuitar
 @onready var clock_note_container_node: Node2D = %Clock/NotesContainer
 @onready var clock_play_hand_node: Node2D = %Clock/ClockPlayHand
@@ -93,24 +99,17 @@ func _strum_clock_guitar(key_string: String) -> void:
 	var was_on_beat = time_diff_and_nearest_beat[time_diff_index] <= strum_success_tolerance
 	print("Strummed (key: %s, on_beat: %s, beat_in_measure: %s)" % [key_string, was_on_beat, time_diff_and_nearest_beat[nearest_beat_index]])
 
-	if !was_on_beat:
-		AudioManager.play_sfx(strum_failure_sfx)
-		return
-	
 	var note_at_beat_in_measure = _match_to_nearest_beat(time_diff_and_nearest_beat[nearest_beat_index])
-	if note_at_beat_in_measure == null:
-		AudioManager.play_sfx(strum_failure_sfx)
-		return
 	
-	if note_at_beat_in_measure.character != key_string:
-		# Lets delete the note
+	if !was_on_beat or note_at_beat_in_measure == null or note_at_beat_in_measure.character != key_string:
 		AudioManager.play_sfx(strum_failure_sfx)
-		return
-	
-	# Successfully hit the note
-	AudioManager.play_sfx(strum_success_sfx)
-	note_at_beat_in_measure.node.queue_free()
-	current_notes.erase(note_at_beat_in_measure)
+		emit_signal("missed_beat")
+	else:
+		# Successfully hit the note
+		AudioManager.play_sfx(strum_success_sfx)
+		emit_signal("hit_beat")
+		note_at_beat_in_measure.node.queue_free()
+		current_notes.erase(note_at_beat_in_measure)
 
 func _process(delta: float) -> void:
 	var delta_angle_play = delta * AudioManager.get_node("AudioProcessing").get_rads_per_second()
