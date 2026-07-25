@@ -20,9 +20,6 @@ signal missed_beat
 signal hit_beat
 
 @onready var beat_tracker_node: Node = %BeatTracker
-
-@onready var beat_tracker_node: Node = %BeatTracker
-
 @onready var track_player: TrackPlayer = $TrackPlayer 
 @onready var clock_guitar_node: Node2D = %Clock/ClockGuitar
 @onready var clock_note_container_node: Node2D = %Clock/NotesContainer
@@ -46,25 +43,15 @@ var game_over_scene = preload("res://scenes/game_over/game_over.tscn")
 var current_notes: Array[SpawnedClockNoteData] = []
 
 func _ready() -> void:
-	AudioManager.get_node("AudioProcessing").connect("song", _on_new_song)
-	AudioManager.get_node("AudioProcessing").connect("beat", _on_beat)
-	AudioManager.get_node("AudioProcessing").connect("measure", _on_new_measure)
-	AudioManager.get_node("AudioProcessing").connect("song_completed", _on_game_won)
-	AudioManager.load_song()
-	
-func _on_new_song(title, artist, beats_per_measure) -> void:
-	beats_per_clock_cycle = beats_per_measure
-	_title = title
-	_artist = artist
-	for note in current_notes:
-		if is_instance_valid(note):
-			note.node.queue_free()
-	current_notes.clear()
-	_spawn_notes()
-	
-func _on_new_measure(args):	
-	# Bounce the clock guitar node to indicate a measure with a tween. Scale it up to 1.2x 
-	# and then back down to 1.0x over 0.2 seconds total.
+	track_player.spawn_note_event.connect(_spawn_clock_note)
+	track_player.beat.connect(_on_beat)
+	track_player.track_ended.connect(_on_game_won)
+
+	var track = StayFreshPlayableTrack.new().track()
+	print("Playing track: %s" % [track.debug_string()])
+	track_player.play_track(track)
+
+func _bounce_clock(strength: float = 1.1) -> void: 
 	var tween = create_tween()
 	tween.tween_property(clock_guitar_node, "scale", Vector2(strength, strength), 0.1)\
 		.set_trans(Tween.TRANS_QUAD)\
@@ -73,14 +60,8 @@ func _on_new_measure(args):
 		.set_trans(Tween.TRANS_QUAD)\
 		.set_ease(Tween.EASE_IN_OUT)
 
-func _on_beat(song_pos_in_beats):
-	var replace_pos: int = posmod(song_pos_in_beats-1, beats_per_clock_cycle)
-	var replace_target_note: SpawnedClockNoteData = _match_to_nearest_beat(replace_pos)
-	if is_instance_valid(replace_target_note):
-		replace_target_note.node.queue_free()
-		current_notes.erase(replace_target_note)
-	_spawn_clock_note(replace_pos)
-	
+func _on_beat():
+	_bounce_clock()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
@@ -169,7 +150,7 @@ class SpawnedClockNoteData:
 func _on_doom() -> void:
 	# Reveal the game over dialog and stop the audio processing.
 	game_over_dialog_node.show()
-	track_player.stop()
+	track_player.stop_track()
 
 	AudioManager.play_sfx(game_over_sfx)
 	set_process(false)
