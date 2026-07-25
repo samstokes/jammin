@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cwtgm8yuw65kb"]
+
+[ext_resource type="PackedScene" uid="uid://cp1cc7vtyvwmc" path="res://entities/clock_play_hand/clock_play_hand.tscn" id="1_2djbt"]
+[ext_resource type="Script" uid="uid://lj3a3t0ejimv" path="res://entities/clock_doom_hand/clock_doom_hand.gd" id="2_nwpun"]
+
+[node name="ClockDoomHand" unique_id=1770868133 instance=ExtResource("1_2djbt")]
+script = ExtResource("2_nwpun")
+doom_seconds = 60.0
+length = 256.0
+color = Color(1, 0, 0, 1)
+thickness = 7.0

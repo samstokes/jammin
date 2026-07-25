@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://tmunj8komwek" path="res://entities/clock_guitar/clock_guitar.tscn" id="2_gs6we"]
 [ext_resource type="PackedScene" uid="uid://cp1cc7vtyvwmc" path="res://entities/clock_play_hand/clock_play_hand.tscn" id="3_gs6we"]
 [ext_resource type="Script" uid="uid://2ccsdq47rcvi" path="res://scenes/clock_jam/score_tracker.gd" id="5_7cr65"]
+[ext_resource type="PackedScene" uid="uid://cwtgm8yuw65kb" path="res://entities/clock_doom_hand/clock_doom_hand.tscn" id="6_8ds76"]
 
 [node name="ClockJammer" type="Control" unique_id=960518545]
 layout_mode = 3
@@ -53,10 +54,7 @@ layout_mode = 2
 [node name="Clock" type="Node2D" parent="HBoxContainer/CenterContainer/CenterContainer/Control" unique_id=1979636652]
 unique_name_in_owner = true
 
-[node name="ClockDoomHand" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1770868133 instance=ExtResource("3_gs6we")]
-length = 256.0
-color = Color(1, 0, 0, 1)
-thickness = 7.0
+[node name="ClockDoomHand" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1770868133 instance=ExtResource("6_8ds76")]
 
 [node name="ClockGuitar" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1683121846 instance=ExtResource("2_gs6we")]
 
