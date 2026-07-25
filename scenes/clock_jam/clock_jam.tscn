@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c0ngh35oowrpw" path="res://scenes/clock_jam/clock_jam.gd" id="1_icskc"]
 [ext_resource type="Script" uid="uid://bxdr2be4wvgoj" path="res://scenes/clock_jam/populate_song_info.gd" id="2_7cr65"]
 [ext_resource type="PackedScene" uid="uid://tmunj8komwek" path="res://entities/clock_guitar/clock_guitar.tscn" id="2_gs6we"]
+[ext_resource type="PackedScene" uid="uid://dgsngsut36h8c" path="res://scenes/game_over/game_over.tscn" id="2_pto6c"]
 [ext_resource type="PackedScene" uid="uid://cp1cc7vtyvwmc" path="res://entities/clock_play_hand/clock_play_hand.tscn" id="3_gs6we"]
 [ext_resource type="Script" uid="uid://2ccsdq47rcvi" path="res://scenes/clock_jam/score_tracker.gd" id="5_7cr65"]
 [ext_resource type="PackedScene" uid="uid://cwtgm8yuw65kb" path="res://entities/clock_doom_hand/clock_doom_hand.tscn" id="6_8ds76"]
@@ -18,7 +19,7 @@ size_flags_horizontal = 2
 size_flags_vertical = 6
 script = ExtResource("1_icskc")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=78248562]
+[node name="GameContainer" type="HBoxContainer" parent="." unique_id=78248562]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,51 +29,56 @@ grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="StartContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=660518674]
+[node name="StartContainer" type="VBoxContainer" parent="GameContainer" unique_id=660518674]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="Label" type="Label" parent="HBoxContainer/StartContainer" unique_id=1231400250]
+[node name="Label" type="Label" parent="GameContainer/StartContainer" unique_id=1231400250]
 layout_mode = 2
 text = "Artist - Title"
 horizontal_alignment = 1
 script = ExtResource("2_7cr65")
 
-[node name="CenterContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=983289811]
+[node name="CenterContainer" type="VBoxContainer" parent="GameContainer" unique_id=983289811]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 size_flags_stretch_ratio = 4.0
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/CenterContainer" unique_id=1617088163]
+[node name="CenterContainer" type="CenterContainer" parent="GameContainer/CenterContainer" unique_id=1617088163]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="HBoxContainer/CenterContainer/CenterContainer" unique_id=659273067]
+[node name="Control" type="Control" parent="GameContainer/CenterContainer/CenterContainer" unique_id=659273067]
 layout_mode = 2
 
-[node name="Clock" type="Node2D" parent="HBoxContainer/CenterContainer/CenterContainer/Control" unique_id=1979636652]
+[node name="Clock" type="Node2D" parent="GameContainer/CenterContainer/CenterContainer/Control" unique_id=1979636652]
 unique_name_in_owner = true
 
-[node name="ClockDoomHand" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1770868133 instance=ExtResource("6_8ds76")]
+[node name="ClockDoomHand" parent="GameContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1770868133 instance=ExtResource("6_8ds76")]
 
-[node name="ClockGuitar" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1683121846 instance=ExtResource("2_gs6we")]
+[node name="ClockGuitar" parent="GameContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1683121846 instance=ExtResource("2_gs6we")]
 
-[node name="ClockPlayHand" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=514214267 instance=ExtResource("3_gs6we")]
+[node name="ClockPlayHand" parent="GameContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=514214267 instance=ExtResource("3_gs6we")]
 length = 192.0
 thickness = 3.0
 
-[node name="NotesContainer" type="Node2D" parent="HBoxContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=259836155]
+[node name="NotesContainer" type="Node2D" parent="GameContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=259836155]
 
-[node name="EndContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=761765869]
+[node name="EndContainer" type="VBoxContainer" parent="GameContainer" unique_id=761765869]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="Label" type="Label" parent="HBoxContainer/EndContainer" unique_id=1117677339]
+[node name="Label" type="Label" parent="GameContainer/EndContainer" unique_id=1117677339]
 layout_mode = 2
 text = "Beats Survived: 0"
 horizontal_alignment = 1
 script = ExtResource("5_7cr65")
 
-[connection signal="doom" from="HBoxContainer/CenterContainer/CenterContainer/Control/Clock/ClockDoomHand" to="." method="_on_doom"]
+[node name="GameOverDialog" parent="." unique_id=1903633973 instance=ExtResource("2_pto6c")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[connection signal="doom" from="GameContainer/CenterContainer/CenterContainer/Control/Clock/ClockDoomHand" to="." method="_on_doom"]

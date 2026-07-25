@@ -2,7 +2,7 @@ extends Node
 
 @export var beats_per_clock_cycle = 4.0
 @export var strum_success_tolerance = 0.05
-@export var doom_seconds = 60.0
+@export var doom_seconds = 10.0
 
 var doom_rads_per_second = TAU / doom_seconds
 
@@ -26,6 +26,7 @@ signal hit_beat
 @onready var clock_note_container_node: Node2D = %Clock/NotesContainer
 @onready var clock_play_hand_node: Node2D = %Clock/ClockPlayHand
 @onready var clock_doom_hand_node: Node2D = %Clock/ClockDoomHand
+@onready var game_over_dialog_node: Node = %GameOverDialog
 
 
 var clock_measure_beat_sfx = preload("res://sfx/glass_005.ogg")
@@ -39,6 +40,7 @@ var game_over_sfx = preload("res://sfx/explosionCrunch_004.ogg")
 var clock_note_scene = preload("res://entities/clock_note/clock_note.tscn")
 var playable_characters = ["f", "left"]
 
+var game_over_scene = preload("res://scenes/game_over/game_over.tscn")
 
 var current_notes: Array[SpawnedClockNoteData] = []
 
@@ -147,8 +149,10 @@ class SpawnedClockNoteData:
 	var beat_in_measure: int
 	var node: Node2D
 
-
 func _on_doom() -> void:
+	# Reveal the game over dialog and stop the audio processing.
+	game_over_dialog_node.show()
+
 	# TODO replace me with game over logic
 	AudioManager.get_node("AudioProcessing").stop()
 	AudioManager.play_sfx(game_over_sfx)
