@@ -39,4 +39,3 @@ func _draw():
 		var label_position = directional_vector * (length + label_offset)
 		_note_label_node.text = character
 		_note_label_node.position = label_position - _note_label_node.size / 2
-

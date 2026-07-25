@@ -7,6 +7,10 @@ extends Node
 var current_song_time: float = 0.0
 var beat_count: int = 0
 
+# For accessing Vector2 return from  AudioProcessing.delta_time_and_nearest_beat()
+var time_diff_index = 0
+var nearest_beat_index = 1
+
 @onready var clock_guitar_node: Node2D = %Clock/ClockGuitar
 @onready var clock_note_container_node: Node2D = %Clock/NotesContainer
 @onready var clock_play_hand_node: Node2D = %Clock/ClockPlayHand
@@ -19,13 +23,26 @@ var strum_success_sfx = preload("res://sfx/tick_001.ogg")
 var strum_failure_sfx = preload("res://sfx/click_001.ogg")
 
 var clock_note_scene = preload("res://entities/clock_note/clock_note.tscn")
-var playable_characters = ["a", "s", "d", "f"]
+var playable_characters = ["f", "left"]
 
 
 var current_notes: Array[SpawnedClockNoteData] = []
 
 func _ready() -> void:
+	AudioProcessing.play(0)
 	_spawn_four_notes()
+	AudioProcessing.connect("beat", _on_beat)
+	AudioProcessing.connect("measure", _on_new_measure)
+	
+
+# WARNING, DO NOT ERASE IN ASCENDING ORDER
+func _on_new_measure(args):
+	for i in range(current_notes.size() -1, -1, -1):
+		var note = current_notes[i]
+		note.node.queue_free()
+		note.erase()
+	_spawn_four_notes()
+		
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
@@ -37,13 +54,9 @@ func _strum_clock_guitar(key_string: String) -> void:
 	AudioManager.play_sfx(strum_success_sfx)
 
 	# Determine if the strum was on a beat by rounding the current song to the nearest beat with a tolerance of 0.1 seconds.
-	var seconds_per_beat = 60.0 / beats_per_minute
-	var nearest_beat_time = round(current_song_time / seconds_per_beat) * seconds_per_beat
-	var time_difference = abs(current_song_time - nearest_beat_time)
-	var was_on_beat = time_difference <= strum_success_tolerance
-
-	var nearest_beat_in_measure = int(round(nearest_beat_time * beats_per_minute / 60.0)) % int(beats_per_clock_cycle)
-	print("Strummed (key: %s, on_beat: %s, beat_in_measure: %s)" % [key_string, was_on_beat, nearest_beat_in_measure])
+	var time_diff_and_nearest_beat = AudioProcessing.delta_time_and_nearest_beat()
+	var was_on_beat = time_diff_and_nearest_beat[time_diff_index] <= strum_success_tolerance
+	print("Strummed (key: %s, on_beat: %s, beat_in_measure: %s)" % [key_string, was_on_beat, time_diff_and_nearest_beat[nearest_beat_index]])
 
 	if !was_on_beat:
 		AudioManager.play_sfx(strum_failure_sfx)
@@ -51,7 +64,7 @@ func _strum_clock_guitar(key_string: String) -> void:
 	
 	var note_at_beat_in_measure = null
 	for note_data in current_notes:
-		if note_data.beat_in_measure == nearest_beat_in_measure:
+		if note_data.beat_in_measure == time_diff_and_nearest_beat[nearest_beat_index]:
 			note_at_beat_in_measure = note_data
 			break
 	if note_at_beat_in_measure == null:
@@ -67,35 +80,14 @@ func _strum_clock_guitar(key_string: String) -> void:
 	AudioManager.play_sfx(strum_success_sfx)
 	note_at_beat_in_measure.node.queue_free()
 	current_notes.erase(note_at_beat_in_measure)
-	_on_note_strummed()
 
 
 func _process(delta: float) -> void:
-	# Update the current song time and check for beat changes
-	var previous_time = current_song_time
-	current_song_time += delta
-
-	var previous_beat = int(previous_time * beats_per_minute / 60.0)
-	var current_beat = int(current_song_time * beats_per_minute / 60.0)
-	if current_beat > previous_beat:
-		beat_count += 1
-		_on_beat()
-
-	var seconds_per_beat = 60.0 / beats_per_minute
-	var beats_per_second = 1.0 / seconds_per_beat
-	var delta_angle = delta * beats_per_second * TAU / beats_per_clock_cycle
+	var delta_angle = delta * AudioProcessing.get_rads_per_second()
 	clock_play_hand_node.angle += delta_angle
 
-func _on_note_strummed():
-	if current_notes.is_empty():
-		_spawn_four_notes()
 
-func _on_beat():
-	var is_measure_start = beat_count % int(beats_per_clock_cycle) == 0
-	if is_measure_start:
-		AudioManager.play_sfx(clock_measure_start_sfx)
-	else:
-		AudioManager.play_sfx(clock_measure_beat_sfx)
+func _on_beat(args):
 
 	# Bounce the clock guitar node to indicate a beat with a tween. Scale it up to 1.2x 
 	# and then back down to 1.0x over 0.2 seconds total.

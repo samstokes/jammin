@@ -1,6 +1,13 @@
 [gd_scene format=3 uid="uid://ts2fte1nr5tx"]
 
 [ext_resource type="Script" uid="uid://bugbp20dc3jee" path="res://scenes/globals/audio_manager.gd" id="1_kic43"]
+[ext_resource type="AudioStream" uid="uid://cyjei6geq4i5j" path="res://audio/03 - Stay Fresh.mp3" id="2_prhr6"]
+[ext_resource type="Script" uid="uid://lj5ysx7gvtfj" path="res://scenes/globals/audio_processing.gd" id="3_hj6p4"]
 
 [node name="AudioManager" type="Node2D" unique_id=305368265]
 script = ExtResource("1_kic43")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=126237020]
+stream = ExtResource("2_prhr6")
+script = ExtResource("3_hj6p4")
+bmp = 128
