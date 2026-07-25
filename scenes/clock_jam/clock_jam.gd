@@ -163,7 +163,8 @@ func _on_game_won() -> void:
 	set_process(false)
 
 func _on_score_tracker_streak_extended(streak: int) -> void:
-	# Reward longer streaks. Fiddle with this calculation to implement diminishing returns
-	var streak_seconds_bought = seconds_bought_base * (1.5 ** streak - 0.5)
+	# Reward longer streaks.
+	# Fiddle with this formula to implement diminishing returns instead
+	var streak_seconds_bought = seconds_bought_base * (1.1 ** streak - 0.1)
 	
 	clock_doom_hand_node.buy_time(streak_seconds_bought)

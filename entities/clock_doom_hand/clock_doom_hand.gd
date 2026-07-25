@@ -27,4 +27,7 @@ func buy_time(seconds: float) -> void:
 	var new_angle = angle - extra_angle
 	new_angle = maxf(new_angle, 0.0)
 	
-	angle = new_angle
+	var tween = create_tween()
+	tween.tween_property(self, "angle", new_angle, 0.2)\
+		.set_trans(Tween.TRANS_QUAD)\
+		.set_ease(Tween.EASE_OUT)
