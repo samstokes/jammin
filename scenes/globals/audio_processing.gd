@@ -57,5 +57,5 @@ func delta_time_and_nearest_beat():
 	var nearest_beat_time = nearest_beat() * sec_per_beat
 	var abs_delta_to_nearest_beat = abs(song_pos - nearest_beat_time)
 	var nearest_beat_in_measure = int(round(nearest_beat_time /sec_per_beat)) % int(beats_per_measure)
-	print(abs_delta_to_nearest_beat, nearest_beat_in_measure)
+	print(abs_delta_to_nearest_beat, " ", )
 	return Vector2(abs_delta_to_nearest_beat, nearest_beat_in_measure)
