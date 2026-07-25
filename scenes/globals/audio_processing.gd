@@ -18,7 +18,6 @@ signal beat(position)
 # Called when the node enters the scene tree for the first time.
 # V1: play music immediately and set up the bmp dynamically from exported data
 func _ready() -> void:
-	print("AudioProcessing: my dad is ", get_parent().name)
 	sec_per_beat = 60.0/bmp
 	play()
 
@@ -31,7 +30,6 @@ func _physics_process(delta: float) -> void:
 		_track_beat_and_measure()
 
 func _track_beat_and_measure():
-	print("AudioProcessing._track_beat_and_measure: my dad is ", get_parent().name)
 	if last_reported_beat < song_pos_in_beats:
 		if measure_num > beats_per_measure:
 			measure_num = 1
