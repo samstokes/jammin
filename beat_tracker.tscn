@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://bph2b0jihsi6y"]
-
-[ext_resource type="Script" uid="uid://dtuc5gcrfal61" path="res://beat_tracker.gd" id="1_ibw0e"]
-
-[node name="BeatTracker" type="Node" unique_id=779208897]
-script = ExtResource("1_ibw0e")
