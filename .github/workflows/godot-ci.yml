@@ -43,7 +43,7 @@ jobs:
           name: windows
           path: build/windows
       - name: Publish to Itch.io with Butler
-        uses: Oval-Tutu/publish-to-itch-with-butler@v1.0.0
+        uses: Oval-Tutu/publish-to-itch-with-butler@1.0.0
         with:
           api-key: ${{ secrets.BUTLER_API_KEY }}
           itch_user: ${{ env.ITCH_USER }}
@@ -79,7 +79,7 @@ jobs:
           name: linux
           path: build/linux
       - name: Publish to Itch.io with Butler
-        uses: Oval-Tutu/publish-to-itch-with-butler@v1.0.0
+        uses: Oval-Tutu/publish-to-itch-with-butler@1.0.0
         with:
           api-key: ${{ secrets.BUTLER_API_KEY }}
           itch_user: ${{ env.ITCH_USER }}
@@ -122,7 +122,7 @@ jobs:
           branch: gh-pages # The branch the action should deploy to.
           folder: build/web # The folder the action should deploy.
       - name: Publish to Itch.io with Butler
-        uses: Oval-Tutu/publish-to-itch-with-butler@v1.0.0
+        uses: Oval-Tutu/publish-to-itch-with-butler@1.0.0
         with:
           api-key: ${{ secrets.BUTLER_API_KEY }}
           itch_user: ${{ env.ITCH_USER }}
