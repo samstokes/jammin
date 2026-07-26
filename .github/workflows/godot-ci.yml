@@ -57,7 +57,7 @@ jobs:
           BUTLER_EXEC="butler"
           mkdir ./tools 2>/dev/null || true
           pushd tools
-            curl -sSLfo ./butler.zip "https://broth.itch.zone/butler/${BUTLER_PLATFORM}/LATEST/archive/default"
+            wget -q -O ./butler.zip "https://broth.itch.zone/butler/${BUTLER_PLATFORM}/LATEST/archive/default"
             unzip butler.zip
             chmod +x ./${BUTLER_EXEC}
           popd
@@ -103,14 +103,6 @@ jobs:
         with:
           name: linux
           path: build/linux
-      - name: Install curl
-        run: |
-          sudo apt update
-          sudo apt install curl
-      - name: Install curl
-        run: |
-          sudo apt update
-          sudo apt install curl
       - name: Download butler
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
@@ -121,7 +113,7 @@ jobs:
           BUTLER_EXEC="butler"
           mkdir ./tools 2>/dev/null || true
           pushd tools
-            curl -sSLfo ./butler.zip "https://broth.itch.zone/butler/${BUTLER_PLATFORM}/LATEST/archive/default"
+            wget -q -O ./butler.zip "https://broth.itch.zone/butler/${BUTLER_PLATFORM}/LATEST/archive/default"
             unzip butler.zip
             chmod +x ./${BUTLER_EXEC}
           popd
@@ -174,10 +166,6 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: build/web # The folder the action should deploy.
-      - name: Install curl
-        run: |
-          sudo apt update
-          sudo apt install curl
       - name: Download butler
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
@@ -188,7 +176,7 @@ jobs:
           BUTLER_EXEC="butler"
           mkdir ./tools 2>/dev/null || true
           pushd tools
-            curl -sSLfo ./butler.zip "https://broth.itch.zone/butler/${BUTLER_PLATFORM}/LATEST/archive/default"
+            wget -q -O ./butler.zip "https://broth.itch.zone/butler/${BUTLER_PLATFORM}/LATEST/archive/default"
             unzip butler.zip
             chmod +x ./${BUTLER_EXEC}
           popd
