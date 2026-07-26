@@ -103,6 +103,14 @@ jobs:
         with:
           name: linux
           path: build/linux
+      - name: Install curl
+        run: |
+          sudo apt update
+          sudo apt install curl
+      - name: Install curl
+        run: |
+          sudo apt update
+          sudo apt install curl
       - name: Download butler
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
@@ -166,6 +174,10 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: build/web # The folder the action should deploy.
+      - name: Install curl
+        run: |
+          sudo apt update
+          sudo apt install curl
       - name: Download butler
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
