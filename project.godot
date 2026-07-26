@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Jammin"
-run/main_scene="uid://dx6j70wkm2cp7"
+run/main_scene="uid://bqnnqa0pbef5f"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

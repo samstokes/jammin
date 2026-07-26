@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://bqnnqa0pbef5f"]
+
+[ext_resource type="Texture2D" uid="uid://cyex0fwyw8mnw" path="res://art/title.png" id="1_8mcyk"]
+[ext_resource type="Texture2D" uid="uid://cp8y345akbb5l" path="res://art/start.png" id="2_4q1m5"]
+[ext_resource type="Texture2D" uid="uid://bw076ou4b4aoh" path="res://art/select.png" id="2_evs2v"]
+[ext_resource type="Texture2D" uid="uid://e512o1733dqt" path="res://art/settings.png" id="3_4q1m5"]
+[ext_resource type="Script" uid="uid://db7e3in35pvyk" path="res://scenes/Menu/start_opt.gd" id="3_n6xgq"]
+[ext_resource type="Texture2D" uid="uid://ca8mrf82claev" path="res://art/logo.svg" id="5_2itis"]
+[ext_resource type="Script" uid="uid://dldxsq6iao3jl" path="res://scenes/Menu/song_select.gd" id="5_akboc"]
+[ext_resource type="Script" uid="uid://ia1g3odg8bfs" path="res://scenes/Menu/settings.gd" id="7_akboc"]
+
+[node name="Home" type="MarginContainer" unique_id=661391278]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1136214782]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1939251183]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=801194626]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MenuOptions" type="VBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1048268032]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Title" type="TextureRect" parent="HBoxContainer/VBoxContainer/MenuOptions" unique_id=1534473085]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("1_8mcyk")
+expand_mode = 1
+
+[node name="StartOpt" type="TextureRect" parent="HBoxContainer/VBoxContainer/MenuOptions" unique_id=1078107642]
+custom_maximum_size = Vector2(-1, 75)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_4q1m5")
+expand_mode = 1
+stretch_mode = 4
+script = ExtResource("3_n6xgq")
+
+[node name="SongSelect" type="TextureRect" parent="HBoxContainer/VBoxContainer/MenuOptions" unique_id=1915862703]
+custom_maximum_size = Vector2(-1, 75)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_evs2v")
+expand_mode = 1
+stretch_mode = 4
+script = ExtResource("5_akboc")
+
+[node name="Settings" type="TextureRect" parent="HBoxContainer/VBoxContainer/MenuOptions" unique_id=812836454]
+custom_maximum_size = Vector2(-1, 75)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_4q1m5")
+expand_mode = 1
+stretch_mode = 4
+script = ExtResource("7_akboc")
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer" unique_id=1825094221]
+custom_maximum_size = Vector2(300, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/CenterContainer" unique_id=1034471420]
+custom_minimum_size = Vector2(300, 360)
+layout_mode = 2
+texture = ExtResource("5_2itis")
+expand_mode = 1
