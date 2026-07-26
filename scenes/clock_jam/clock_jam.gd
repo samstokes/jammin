@@ -34,12 +34,6 @@ func _ready() -> void:
 	track_player.beat.connect(_on_beat)
 	track_player.track_ended.connect(_on_game_won)
 
-	var track = [PlayableTrackMxLxfx, PlayableTrackStayFresh].pick_random().new().track()
-	print("Playing track: %s" % [track.debug_string()])
-	track_player.play_track(track)
-
-	song_label_node.text = track.track_details.title + "\n" + track.track_details.artist
-
 func _bounce_clock(strength: float = 1.1) -> void: 
 	var tween = create_tween()
 	tween.tween_property(clock_guitar_node, "scale", Vector2(strength, strength), 0.1)\
@@ -160,3 +154,13 @@ func _on_score_tracker_streak_extended(streak: int) -> void:
 	var streak_seconds_bought = seconds_bought_base * (1.1 ** streak - 0.1)
 	
 	clock_doom_hand_node.buy_time(streak_seconds_bought)
+
+
+func _on_song_selector_selected(song_id: int) -> void:
+	var track = PlayableTrack.from_registry(song_id)
+	print("Playing track: %s" % [track.debug_string()])
+	track_player.play_track(track)
+
+	song_label_node.text = track.track_details.title + "\n" + track.track_details.artist
+	
+	$SongSelector.hide()

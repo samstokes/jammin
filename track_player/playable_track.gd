@@ -13,6 +13,15 @@ var audio_resource: AudioStream
 var track_details: TrackDetails
 var events: Array[TrackEvent] = []
 
+static func from_registry(song_id: int) -> PlayableTrack:
+	# keep these in sync with song_registry.json and the individual PlayableTrackXxx classes
+	match song_id:
+		1: return PlayableTrackStayFresh.track()
+		2: return PlayableTrackMxLxfx.track()
+		_:
+			assert(false, "selected a song we don't have a playable track for")
+			return null # not really
+
 func debug_string() -> String:
 	var events_debug_string = "["
 	for event in events:

@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://cf6j4m3dk4m4y"]
+
+[ext_resource type="Script" uid="uid://bgep8ei2lfrii" path="res://scenes/song_selector/song_selector.gd" id="1_ryr2p"]
+
+[node name="SongSelector" type="Panel" unique_id=104781389]
+custom_minimum_size = Vector2(300, 200)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ryr2p")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2073486705]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer" unique_id=370567593]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer" unique_id=1383853605]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer" unique_id=1813691340]
+layout_mode = 2
+text = "Pick a song!"
+horizontal_alignment = 1
+
+[node name="SongsOptionButton" type="OptionButton" parent="MarginContainer/CenterContainer/VBoxContainer" unique_id=1741117479]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "stay_fresh - Android52"
+popup/item_0/id = 1
+popup/item_1/text = "mx lxfx ! - imfy"
+popup/item_1/id = 2
+
+[node name="Button" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer" unique_id=584523186]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Choose for me!"
+
+[connection signal="item_selected" from="MarginContainer/CenterContainer/VBoxContainer/SongsOptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
