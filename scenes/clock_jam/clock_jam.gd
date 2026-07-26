@@ -91,6 +91,7 @@ func _on_note_strummed_correctly(note_data: SpawnedClockNoteData) -> void:
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_success_sfx)
+	hit_beat.emit()
 
 func _on_note_strummed_incorrectly(note_data: SpawnedClockNoteData) -> void:
 	# Remove the note from the current notes list and free its node
@@ -98,12 +99,14 @@ func _on_note_strummed_incorrectly(note_data: SpawnedClockNoteData) -> void:
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_failure_sfx)
+	missed_beat.emit()
 
 func _on_note_missed(note_data: SpawnedClockNoteData) -> void:
 	_current_notes.erase(note_data)
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_failure_sfx)
+	missed_beat.emit()
 
 func _process(delta: float) -> void:
 	clock_play_hand_node.angle = track_player.get_measure_progress() * TAU
