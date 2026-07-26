@@ -3,7 +3,9 @@ extends Node
 @export var strum_success_tolerance = 0.2
 @export var seconds_bought_base = 0.2
 
-signal missed_beat 
+enum MissedType {MISS, BAD_HIT}
+
+signal missed_beat(missed_type: MissedType)
 # ^ two different kinds of missed beats, btw: 
 # 1. hit a key but not on beat or
 # 2. missed a beat entirely (no button press)
@@ -33,12 +35,6 @@ func _ready() -> void:
 	track_player.spawn_note_event.connect(_spawn_clock_note)
 	track_player.beat.connect(_on_beat)
 	track_player.track_ended.connect(_on_game_won)
-
-	var track = [PlayableTrackMxLxfx, PlayableTrackStayFresh].pick_random().new().track()
-	print("Playing track: %s" % [track.debug_string()])
-	track_player.play_track(track)
-
-	song_label_node.text = track.track_details.title + "\n" + track.track_details.artist
 
 func _bounce_clock(strength: float = 1.1) -> void: 
 	var tween = create_tween()
@@ -99,14 +95,14 @@ func _on_note_strummed_incorrectly(note_data: SpawnedClockNoteData) -> void:
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_failure_sfx)
-	missed_beat.emit()
+	missed_beat.emit(MissedType.BAD_HIT)
 
 func _on_note_missed(note_data: SpawnedClockNoteData) -> void:
 	_current_notes.erase(note_data)
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_failure_sfx)
-	missed_beat.emit()
+	missed_beat.emit(MissedType.MISS)
 
 func _process(delta: float) -> void:
 	clock_play_hand_node.angle = track_player.get_measure_progress() * TAU
@@ -160,3 +156,13 @@ func _on_score_tracker_streak_extended(streak: int) -> void:
 	var streak_seconds_bought = seconds_bought_base * (1.1 ** streak - 0.1)
 	
 	clock_doom_hand_node.buy_time(streak_seconds_bought)
+
+
+func _on_song_selector_selected(song_id: int) -> void:
+	var track = PlayableTrack.from_registry(song_id)
+	print("Playing track: %s" % [track.debug_string()])
+	track_player.play_track(track)
+
+	song_label_node.text = track.track_details.title + "\n" + track.track_details.artist
+	
+	$SongSelector.hide()

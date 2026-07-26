@@ -1,6 +1,6 @@
 class_name PlayableTrackMxLxfx
 
-func track() -> PlayableTrack:
+static func track() -> PlayableTrack:
 	var playable_track = PlayableTrackBuilder.from_registry("mx lxfx !")
 
 	var message_to_spawn = "helloworld"

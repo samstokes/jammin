@@ -1,6 +1,6 @@
 class_name PlayableTrackStayFresh
 
-func track() -> PlayableTrack:
+static func track() -> PlayableTrack:
 	var playable_track = PlayableTrackBuilder.from_registry("stay_fresh")
 
 	var message_to_spawn = "helloworld"
