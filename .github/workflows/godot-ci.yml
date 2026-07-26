@@ -75,7 +75,7 @@ jobs:
           fi
           ./tools/${BUTLER_EXEC} push \
           "${{ env.WIN_PACKAGE }}" \
-          ${{ env.ITCH_USER }}/${{ env.ITCH_USER }}:windows ${versionArgument}
+          ${{ env.ITCH_USER }}/${{ env.ITCH_GAME }}:windows ${versionArgument}
 
 
   export-linux:
@@ -131,7 +131,7 @@ jobs:
           fi
           ./tools/${BUTLER_EXEC} push \
           "${{ env.LIN_PACKAGE }}" \
-          ${{ env.ITCH_USER }}/${{ env.ITCH_USER }}:linux ${versionArgument}
+          ${{ env.ITCH_USER }}/${{ env.ITCH_GAME }}:linux ${versionArgument}
 
   export-web:
     name: Web Export
@@ -158,10 +158,10 @@ jobs:
         with:
           name: web
           path: build/web
-      - name: Install rsync 📚
+      - name: Install rsync 
         run: |
           apt-get update && apt-get install -y rsync
-      - name: Deploy to GitHub Pages 🚀
+      - name: Deploy to GitHub Pages 
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages # The branch the action should deploy to.
@@ -194,4 +194,4 @@ jobs:
           fi
           ./tools/${BUTLER_EXEC} push \
           "${{ env.WEB_PACKAGE }}" \
-          ${{ env.ITCH_USER }}/${{ env.ITCH_USER }}:linux ${versionArgument}
+          ${{ env.ITCH_USER }}/${{ env.ITCH_GAME }}:html ${versionArgument}
