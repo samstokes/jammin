@@ -34,7 +34,7 @@ func _ready() -> void:
 	track_player.beat.connect(_on_beat)
 	track_player.track_ended.connect(_on_game_won)
 
-	var track = StayFreshPlayableTrack.new().track()
+	var track = PlayableTrackStayFresh.new().track()
 	print("Playing track: %s" % [track.debug_string()])
 	track_player.play_track(track)
 

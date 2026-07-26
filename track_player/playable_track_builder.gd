@@ -6,6 +6,18 @@ func _init():
 	_playable_track = PlayableTrack.new()
 	_playable_track.track_details = PlayableTrack.TrackDetails.new()
 
+static func from_registry(title: String) -> PlayableTrackBuilder:
+	var info = AudioManager.song_title_to_info[title]
+	
+	var track = new()
+	track.set_audio_resource(load(info.UID))
+	track.set_title(info.title)
+	track.set_artist(info.artist)
+	track.set_bpm(info.bpm)
+	track.set_beats_per_measure(info.beats_per_measure)
+	
+	return track
+
 func set_audio_resource(audio_resource: AudioStream) -> void:
 	_playable_track.audio_resource = audio_resource
 

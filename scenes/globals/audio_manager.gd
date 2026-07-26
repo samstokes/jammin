@@ -3,6 +3,7 @@ extends Node
 var song_registry_path: String = "res://audio/song_registry.json"
 
 var song_id_to_info: Dictionary[int, SongInfo]
+var song_title_to_info: Dictionary[String, SongInfo]
 
 func _ready() -> void:
 	if (!_load_library()):
@@ -32,6 +33,7 @@ func _load_library() -> bool:
 			curr.beats_per_measure = record["beats_per_measure"]
 			curr.UID = record["UID"]
 			song_id_to_info[record["id"]] = curr
+			song_title_to_info[record["title"]] = curr
 		print("Song Registry Read and stored.")
 		return true
 	else:

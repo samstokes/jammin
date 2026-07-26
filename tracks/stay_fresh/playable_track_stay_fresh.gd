@@ -1,13 +1,7 @@
-class_name StayFreshPlayableTrack
+class_name PlayableTrackStayFresh
 
 func track() -> PlayableTrack:
-	var playable_track = PlayableTrackBuilder.new()
-
-	playable_track.set_audio_resource(load("uid://cyjei6geq4i5j"))
-	playable_track.set_title("Stay Fresh")
-	playable_track.set_artist("Android52")
-	playable_track.set_bpm(128)
-	playable_track.set_beats_per_measure(4)
+	var playable_track = PlayableTrackBuilder.from_registry("stay_fresh")
 
 	var message_to_spawn = "helloworld"
 
