@@ -18,6 +18,7 @@ signal song_completed()
 
 func _ready() -> void:
 	sec_per_beat = 60.0/bpm
+	
 
 # Update and track information every frame
 func _physics_process(delta: float) -> void:
