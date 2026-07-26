@@ -29,5 +29,10 @@ static func track() -> PlayableTrack:
 			note_time.measure = measure_index + 1
 			note_time.beat = beat_index - 1
 			playable_track.spawn_note(spawn_time, note_time, character)
-		
+	
+	var completed_time = PlayableTrackBuilder.BeatTime.new()
+	completed_time.measure = 16
+	completed_time.beat = 0
+	playable_track.completed(completed_time)
+	
 	return playable_track.build()

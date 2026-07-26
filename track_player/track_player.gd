@@ -91,6 +91,8 @@ func _process(delta: float) -> void:
 		match event.type:
 			PlayableTrack.TrackEventType.SPAWN_NOTE:
 				spawn_note_event.emit(event.spawn_note_event)
+			PlayableTrack.TrackEventType.COMPLETED:
+				track_ended.emit()
 	
 	# Fire any events related to the beat or measure if we have crossed a beat or measure boundary
 	var previous_beat = int(floor(_last_processed_time_secs / (60.0 / _current_track.track_details.bpm)))
