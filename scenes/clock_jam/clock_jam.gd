@@ -115,6 +115,11 @@ func _process(delta: float) -> void:
 			_on_note_missed(note_data)
 
 func _spawn_clock_note(event: PlayableTrack.SpawnNoteTrackEvent) -> void:
+	# make sure doom is ticking. This should only matter for the first note,
+	# and should be a no-op for the rest.
+	clock_doom_hand_node.set_process(true)
+	
+	
 	var clock_note_instance = clock_note_scene.instantiate()
 	clock_note_instance.character = event.playable_character
 

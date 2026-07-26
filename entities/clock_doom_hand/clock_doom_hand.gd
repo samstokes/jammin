@@ -10,7 +10,7 @@ signal doom
 
 
 func _ready() -> void:
-	pass
+	set_process(false)
 
 func _process(delta: float) -> void:
 	var delta_angle_doom = delta * doom_rads_per_second
