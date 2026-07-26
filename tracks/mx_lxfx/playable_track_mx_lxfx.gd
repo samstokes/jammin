@@ -9,7 +9,7 @@ static func track() -> PlayableTrack:
 	# One each other measure for 8 measures, counting down from a to z
 	var next_character_index = 0
 	# Song has a long intro with no beats
-	for measure_index in range(7, 15):
+	for measure_index in range(7, 23):
 		var effective_measure_index = measure_index - 7
 
 		for beat_index in range(4):
@@ -31,7 +31,7 @@ static func track() -> PlayableTrack:
 			playable_track.spawn_note(spawn_time, note_time, character)
 	
 	var completed_time = PlayableTrackBuilder.BeatTime.new()
-	completed_time.measure = 16
+	completed_time.measure = 24
 	completed_time.beat = 0
 	playable_track.completed(completed_time)
 	

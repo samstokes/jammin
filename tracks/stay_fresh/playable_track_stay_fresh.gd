@@ -8,7 +8,7 @@ static func track() -> PlayableTrack:
 	# Spawn a bunch of test data notes!
 	# One each other measure for 8 measures, counting down from a to z
 	var next_character_index = 0
-	for measure_index in range(8):
+	for measure_index in range(16):
 		if measure_index < 1:
 			continue # Skip the first measure to give the player time to get ready
 
@@ -28,7 +28,7 @@ static func track() -> PlayableTrack:
 			playable_track.spawn_note(spawn_time, note_time, character)
 			
 	var completed_time = PlayableTrackBuilder.BeatTime.new()
-	completed_time.measure = 9
+	completed_time.measure = 17
 	completed_time.beat = 0
 	playable_track.completed(completed_time)
 		
