@@ -1,6 +1,5 @@
 extends Node
 
-@export var beats_per_clock_cycle = 4.0
 @export var strum_success_tolerance = 0.2
 @export var seconds_bought_base = 0.5
 
