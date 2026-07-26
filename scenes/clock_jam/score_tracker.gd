@@ -8,6 +8,9 @@ var current_streak: int = 0
 # ^ maybe this needs to live somewhere else oh well for now
 var format_string = "Beats Survived: %s\nCurrent Streak: %s"
 
+var passed_at_least_one_note: bool = false
+# ^ this feels sort of jank, but okay, it's fine!!!
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,14 +23,17 @@ func _ready() -> void:
 	
 	
 func _on_beat() -> void:
-	beats_elapsed += 1
-	text = format_string % [beats_elapsed, current_streak]
+	if passed_at_least_one_note:
+		beats_elapsed += 1
+		text = format_string % [beats_elapsed, current_streak]
 	
 func _on_beat_hit() -> void:
+	passed_at_least_one_note = true
 	current_streak += 1
 	streak_extended.emit(current_streak)
 	text = format_string % [beats_elapsed, current_streak]
 	
 func _on_beat_miss() -> void:
+	passed_at_least_one_note = true
 	current_streak = 0
 	text = format_string % [beats_elapsed, current_streak]
