@@ -46,6 +46,7 @@ class TrackTime:
 
 enum TrackEventType {
 	SPAWN_NOTE,
+	COMPLETED,
 }
 	
 class SpawnNoteTrackEvent:
@@ -55,11 +56,20 @@ class SpawnNoteTrackEvent:
 	func debug_string() -> String:
 		return "SpawnNoteTrackEvent(playable_character=%s, time_in_track=%d)" % [playable_character, time_in_track]
 
+class CompletedTrackEvent:
+	func debug_string() -> String:
+		return "CompletedTrackEvent()"
+
 class TrackEvent:
 	var time: TrackTime
 	var type: TrackEventType
 	var spawn_note_event: SpawnNoteTrackEvent
+	var completed_event: CompletedTrackEvent
 
 	func debug_string() -> String:
-		return "TrackEvent(time=%s, type=%s, spawn_note_event=%s)" % [time.debug_string(), type, spawn_note_event.debug_string()]
+		var event_debug: String
+		match type:
+			TrackEventType.SPAWN_NOTE: event_debug = spawn_note_event.debug_string()
+			TrackEventType.COMPLETED: event_debug = completed_event.debug_string()
+		return "TrackEvent(time=%s, type=%s, %s)" % [time.debug_string(), type, event_debug]
 	

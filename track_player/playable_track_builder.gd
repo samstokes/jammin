@@ -45,6 +45,16 @@ func spawn_note(spawn_time : BeatTime, note_time : BeatTime, character: String) 
 
 	_playable_track.events.append(track_event)
 
+func completed(spawn_time: BeatTime) -> void:
+	var completed_event = PlayableTrack.CompletedTrackEvent.new()
+	
+	var track_event = PlayableTrack.TrackEvent.new()
+	track_event.type = PlayableTrack.TrackEventType.COMPLETED
+	track_event.time = _track_time_from_measure_and_beat(spawn_time)
+	track_event.completed_event = completed_event
+	
+	_playable_track.events.append(track_event)
+
 func _track_time_from_measure_and_beat(beat_time: BeatTime) -> PlayableTrack.TrackTime:
 	if _playable_track.track_details.bpm <= 0 or _playable_track.track_details.beats_per_measure <= 0:
 		push_error("BPM and beats per measure must be set before spawning notes.")
