@@ -1,7 +1,7 @@
 extends Node
 
 @export var strum_success_tolerance = 0.2
-@export var seconds_bought_base = 0.5
+@export var seconds_bought_base = 0.2
 
 signal missed_beat 
 # ^ two different kinds of missed beats, btw: 
