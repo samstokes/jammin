@@ -59,7 +59,7 @@ layout_mode = 2
 unique_name_in_owner = true
 
 [node name="ClockDoomHand" parent="GameContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1770868133 instance=ExtResource("6_8ds76")]
-doom_seconds = 15.0
+doom_seconds = 30.0
 
 [node name="ClockGuitar" parent="GameContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1683121846 instance=ExtResource("2_gs6we")]
 
