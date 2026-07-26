@@ -11,6 +11,8 @@ env:
   GODOT_VERSION: 4.7.1
   EXPORT_NAME: Jammin
   PROJECT_PATH: "."
+  ITCH_USER: michaelg1223
+  ITCH_GAME: count-down-to-jam
 
 jobs:
   export-windows:
@@ -40,6 +42,16 @@ jobs:
         with:
           name: windows
           path: build/windows
+      - name: Publish to Itch.io with Butler
+        uses: Oval-Tutu/publish-to-itch-with-butler@v1
+        with:
+          api-key: ${{ secrets.BUTLER_API_KEY }}
+          itch_user: ${{ env.ITCH_USER }}
+          itch_game: ${{ env.ITCH_GAME }}
+          channel: windows
+          package: ./build/windows/
+          version: 1.0.0
+
 
   export-linux:
     name: Linux Export
@@ -66,6 +78,15 @@ jobs:
         with:
           name: linux
           path: build/linux
+      - name: Publish to Itch.io with Butler
+        uses: Oval-Tutu/publish-to-itch-with-butler@v1
+        with:
+          api-key: ${{ secrets.BUTLER_API_KEY }}
+          itch_user: ${{ env.ITCH_USER }}
+          itch_game: ${{ env.ITCH_GAME }}
+          channel: linux
+          package: ./build/linux/
+          version: 1.0.0
 
   export-web:
     name: Web Export
@@ -100,3 +121,12 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: build/web # The folder the action should deploy.
+      - name: Publish to Itch.io with Butler
+        uses: Oval-Tutu/publish-to-itch-with-butler@v1
+        with:
+          api-key: ${{ secrets.BUTLER_API_KEY }}
+          itch_user: ${{ env.ITCH_USER }}
+          itch_game: ${{ env.ITCH_GAME }}
+          channel: html
+          package: ./build/web/
+          version: 1.0.0
