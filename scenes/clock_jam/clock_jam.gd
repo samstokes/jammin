@@ -3,7 +3,9 @@ extends Node
 @export var strum_success_tolerance = 0.2
 @export var seconds_bought_base = 0.2
 
-signal missed_beat 
+enum MissedType {MISS, BAD_HIT}
+
+signal missed_beat(missed_type: MissedType)
 # ^ two different kinds of missed beats, btw: 
 # 1. hit a key but not on beat or
 # 2. missed a beat entirely (no button press)
@@ -93,14 +95,14 @@ func _on_note_strummed_incorrectly(note_data: SpawnedClockNoteData) -> void:
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_failure_sfx)
-	missed_beat.emit()
+	missed_beat.emit(MissedType.BAD_HIT)
 
 func _on_note_missed(note_data: SpawnedClockNoteData) -> void:
 	_current_notes.erase(note_data)
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_failure_sfx)
-	missed_beat.emit()
+	missed_beat.emit(MissedType.MISS)
 
 func _process(delta: float) -> void:
 	clock_play_hand_node.angle = track_player.get_measure_progress() * TAU
