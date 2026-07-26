@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://2ccsdq47rcvi" path="res://scenes/clock_jam/score_tracker.gd" id="5_7cr65"]
 [ext_resource type="PackedScene" uid="uid://cwtgm8yuw65kb" path="res://entities/clock_doom_hand/clock_doom_hand.tscn" id="6_8ds76"]
 [ext_resource type="PackedScene" uid="uid://b53cyinn28722" path="res://scenes/game_won/game_won.tscn" id="8_h5fk5"]
-[ext_resource type="Script" uid="uid://i6q2tx5gv8eu" path="res://scenes/clock_jam/beat_tracker.gd" id="9_bo1sh"]
 [ext_resource type="PackedScene" uid="uid://cu47psxjetvdr" path="res://track_player/track_player.tscn" id="9_bo1sh"]
 
 [node name="ClockJammer" type="Control" unique_id=960518545]
@@ -37,7 +36,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="Label" type="Label" parent="GameContainer/StartContainer" unique_id=1231400250]
+[node name="SongLabel" type="Label" parent="GameContainer/StartContainer" unique_id=1231400250]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Artist - Title"
 horizontal_alignment = 1
@@ -59,7 +59,7 @@ layout_mode = 2
 unique_name_in_owner = true
 
 [node name="ClockDoomHand" parent="GameContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1770868133 instance=ExtResource("6_8ds76")]
-doom_seconds = 15.0
+doom_seconds = 30.0
 
 [node name="ClockGuitar" parent="GameContainer/CenterContainer/CenterContainer/Control/Clock" unique_id=1683121846 instance=ExtResource("2_gs6we")]
 
@@ -82,7 +82,6 @@ script = ExtResource("5_7cr65")
 
 [node name="BeatTracker" type="Node" parent="GameContainer/EndContainer/ScoreTracker" unique_id=275831661]
 unique_name_in_owner = true
-script = ExtResource("9_bo1sh")
 
 [node name="GameOverDialog" parent="." unique_id=1903633973 instance=ExtResource("2_pto6c")]
 unique_name_in_owner = true

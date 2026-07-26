@@ -1,25 +1,14 @@
 extends Node
 
-@export var beats_per_clock_cycle = 4.0
 @export var strum_success_tolerance = 0.2
-@export var seconds_bought_base = 0.5
+@export var seconds_bought_base = 0.2
 
-var current_song_time: float = 0.0
-var beat_count: int = 0
-
-# For accessing Vector2 return from  AudioProcessing.delta_time_and_nearest_beat()
-var time_diff_index = 0
-var nearest_beat_index = 1
-
-var _artist: String = ""
-var _title: String = ""
 signal missed_beat 
 # ^ two different kinds of missed beats, btw: 
 # 1. hit a key but not on beat or
 # 2. missed a beat entirely (no button press)
 signal hit_beat
 
-@onready var beat_tracker_node: Node = %BeatTracker
 @onready var track_player: TrackPlayer = $TrackPlayer 
 @onready var clock_guitar_node: Node2D = %Clock/ClockGuitar
 @onready var clock_note_container_node: Node2D = %Clock/NotesContainer
@@ -27,29 +16,29 @@ signal hit_beat
 @onready var clock_doom_hand_node: Node2D = %Clock/ClockDoomHand
 @onready var game_over_dialog_node: Node = %GameOverDialog
 @onready var game_won_dialog_node: Node = %GameWonDialog
+@onready var song_label_node: Label = %SongLabel
 
 var clock_measure_beat_sfx = preload("res://sfx/glass_005.ogg")
 var clock_measure_start_sfx = preload("res://sfx/glass_006.ogg")
-
 var strum_success_sfx = preload("res://sfx/tick_001.ogg")
 var strum_failure_sfx = preload("res://sfx/click_001.ogg")
-
 var game_over_sfx = preload("res://sfx/explosionCrunch_004.ogg")
 
 var clock_note_scene = preload("res://entities/clock_note/clock_note.tscn")
-
 var game_over_scene = preload("res://scenes/game_over/game_over.tscn")
 
-var current_notes: Array[SpawnedClockNoteData] = []
+var _current_notes: Array[SpawnedClockNoteData] = []
 
 func _ready() -> void:
 	track_player.spawn_note_event.connect(_spawn_clock_note)
 	track_player.beat.connect(_on_beat)
 	track_player.track_ended.connect(_on_game_won)
 
-	var track = StayFreshPlayableTrack.new().track()
+	var track = [PlayableTrackMxLxfx, PlayableTrackStayFresh].pick_random().new().track()
 	print("Playing track: %s" % [track.debug_string()])
 	track_player.play_track(track)
+
+	song_label_node.text = track.track_details.title + "\n" + track.track_details.artist
 
 func _bounce_clock(strength: float = 1.1) -> void: 
 	var tween = create_tween()
@@ -77,7 +66,7 @@ func _strum_clock_guitar(key_string: String) -> void:
 	# Find the oldest note that was strummed or mistrummed within the strum_success_tolerance
 	var strummed_note = null
 	var mistrummed_note = null
-	for note_data in current_notes:
+	for note_data in _current_notes:
 		var is_with_in_tolerance = abs(current_track_time_secs - note_data.time_in_track) <= strum_success_tolerance
 		if !is_with_in_tolerance:
 			continue
@@ -98,30 +87,33 @@ func _strum_clock_guitar(key_string: String) -> void:
 
 func _on_note_strummed_correctly(note_data: SpawnedClockNoteData) -> void:
 	# Remove the note from the current notes list and free its node
-	current_notes.erase(note_data)
+	_current_notes.erase(note_data)
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_success_sfx)
+	hit_beat.emit()
 
 func _on_note_strummed_incorrectly(note_data: SpawnedClockNoteData) -> void:
 	# Remove the note from the current notes list and free its node
-	current_notes.erase(note_data)
+	_current_notes.erase(note_data)
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_failure_sfx)
+	missed_beat.emit()
 
 func _on_note_missed(note_data: SpawnedClockNoteData) -> void:
-	current_notes.erase(note_data)
+	_current_notes.erase(note_data)
 	note_data.node.queue_free()
 
 	AudioManager.play_sfx(strum_failure_sfx)
+	missed_beat.emit()
 
 func _process(delta: float) -> void:
 	clock_play_hand_node.angle = track_player.get_measure_progress() * TAU
 
 	# Evalute if we've missed any notes that are currently on the clock guitar
 	var current_time_secs = track_player.get_track_position_secs()
-	for note_data in current_notes:
+	for note_data in _current_notes:
 		var time_past_note = current_time_secs - note_data.time_in_track
 		if time_past_note > strum_success_tolerance:
 			_on_note_missed(note_data)
@@ -140,7 +132,7 @@ func _spawn_clock_note(event: PlayableTrack.SpawnNoteTrackEvent) -> void:
 	spawned_note_data.character = event.playable_character
 	spawned_note_data.time_in_track = event.time_in_track
 	spawned_note_data.node = clock_note_instance
-	current_notes.append(spawned_note_data)
+	_current_notes.append(spawned_note_data)
 
 class SpawnedClockNoteData:
 	var character: String
